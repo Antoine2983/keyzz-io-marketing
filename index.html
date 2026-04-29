@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KEYZz.io — La couche d'activation post-expérience</title>
+<meta name="description" content="Transformez chaque scan, chaque entrée, chaque achat en relation client mesurable. KEYZz.io, la solution de First-Party Data pour vos événements.">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-dark: #0F0F0F;
+  --bg-mid: #1A1A1A;
+  --bg-card: #161616;
+  --bg-light: #FAFAFA;
+  --bg-section: #F5F5F5;
+  --text-primary: #0F0F0F;
+  --text-on-dark: #FFFFFF;
+  --text-muted: #888888;
+  --text-light: #B8B8B8;
+  --accent: #FF6B35;
+  --accent-soft: rgba(255, 107, 53, 0.1);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-light: #E5E5E5;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-on-dark);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+/* === NAV === */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15, 15, 15, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+nav .container {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px;
+}
+.logo { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+.logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  color: var(--text-light); text-decoration: none; font-size: 14px;
+  font-weight: 500; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text-on-dark); }
+.nav-cta { display: flex; gap: 12px; align-items: center; }
+@media (max-width: 768px) { .nav-links { display: none; } }
+
+/* === BUTTONS === */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px; border-radius: 999px; text-decoration: none;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: all 0.2s; border: none;
+}
+.btn-primary { background: var(--accent); color: white; }
+.btn-primary:hover { background: #FF8556; transform: translateY(-1px); }
+.btn-secondary {
+  background: transparent; color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.btn-secondary:hover { background: rgba(255, 255, 255, 0.06); }
+.btn-ghost { background: transparent; color: white; padding: 8px 16px; }
+.btn-ghost:hover { background: rgba(255, 255, 255, 0.06); }
+.btn-large { padding: 16px 32px; font-size: 15px; }
+
+/* === HERO === */
+.hero {
+  padding: 96px 0 120px;
+  background: var(--bg-dark);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; top: -200px; right: -200px;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 107, 53, 0.15), transparent 70%);
+  pointer-events: none;
+}
+.hero .container {
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px;
+  align-items: center; position: relative;
+}
+.hero-kicker {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 24px;
+}
+.hero h1 {
+  font-size: 56px; line-height: 1.05; font-weight: 700;
+  letter-spacing: -0.03em; margin-bottom: 24px;
+}
+.hero-sub {
+  font-size: 18px; color: var(--text-light); line-height: 1.6;
+  margin-bottom: 40px; max-width: 540px;
+}
+.hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-visual {
+  background: linear-gradient(135deg, var(--bg-mid), var(--bg-card));
+  border: 1px solid var(--border);
+  border-radius: 24px; aspect-ratio: 4/5;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.hero-visual::before {
+  content: '[ Visuel produit ]';
+  color: var(--text-muted); font-size: 13px; letter-spacing: 0.05em;
+}
+@media (max-width: 768px) {
+  .hero { padding: 48px 0 72px; }
+  .hero .container { grid-template-columns: 1fr; gap: 32px; }
+  .hero h1 { font-size: 36px; }
+  .hero-sub { font-size: 16px; }
+}
+
+/* === TRUST === */
+.trust {
+  padding: 48px 0; background: var(--bg-mid);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.trust-label {
+  text-align: center; font-size: 11px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--text-muted); margin-bottom: 32px;
+}
+.trust-logos {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px;
+  align-items: center;
+}
+.trust-logo {
+  height: 40px; background: rgba(255, 255, 255, 0.04);
+  border-radius: 6px; display: flex; align-items: center;
+  justify-content: center; font-size: 11px; color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+@media (max-width: 768px) { .trust-logos { grid-template-columns: repeat(2, 1fr); } }
+
+/* === SECTIONS === */
+section { padding: 120px 0; }
+.section-light { background: var(--bg-light); color: var(--text-primary); }
+.section-dark { background: var(--bg-dark); color: var(--text-on-dark); }
+.section-mid { background: var(--bg-mid); color: var(--text-on-dark); }
+
+.section-kicker {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 16px;
+}
+.section-title {
+  font-size: 44px; font-weight: 700; letter-spacing: -0.025em;
+  line-height: 1.1; margin-bottom: 16px; max-width: 720px;
+}
+.section-sub {
+  font-size: 17px; color: var(--text-muted); line-height: 1.5;
+  margin-bottom: 64px; max-width: 600px;
+}
+.section-light .section-sub { color: #555; }
+@media (max-width: 768px) {
+  section { padding: 64px 0; }
+  .section-title { font-size: 30px; }
+}
+
+/* === PROBLEME (3 cols) === */
+.problems {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.problem-card {
+  padding: 32px; background: white; border-radius: 16px;
+  border: 1px solid var(--border-light);
+}
+.problem-num {
+  display: inline-block; width: 40px; height: 40px;
+  background: var(--accent-soft); color: var(--accent);
+  border-radius: 999px; line-height: 40px; text-align: center;
+  font-weight: 700; font-size: 14px; margin-bottom: 16px;
+}
+.problem-card h3 {
+  font-size: 18px; font-weight: 700; margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+.problem-card p { color: #555; font-size: 14px; line-height: 1.6; }
+@media (max-width: 768px) { .problems { grid-template-columns: 1fr; } }
+
+/* === HOW IT WORKS === */
+.steps {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  position: relative;
+}
+.step {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 32px; position: relative;
+}
+.step-num {
+  font-size: 13px; font-weight: 600; color: var(--accent);
+  letter-spacing: 0.1em; margin-bottom: 16px;
+}
+.step h3 {
+  font-size: 22px; font-weight: 700; margin-bottom: 16px;
+  letter-spacing: -0.015em;
+}
+.step-visual {
+  background: rgba(255, 107, 53, 0.06); border-radius: 12px;
+  height: 140px; margin: 24px 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: var(--text-muted);
+}
+.step p { color: var(--text-light); font-size: 14px; line-height: 1.6; }
+@media (max-width: 768px) { .steps { grid-template-columns: 1fr; } }
+
+/* === CASE HERO === */
+.case-hero {
+  background: linear-gradient(135deg, var(--bg-mid), var(--bg-card));
+  border-radius: 24px; padding: 64px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+  align-items: center; border: 1px solid var(--border);
+}
+.case-hero-tag {
+  display: inline-block; padding: 6px 14px; background: var(--accent-soft);
+  color: var(--accent); border-radius: 999px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 20px;
+}
+.case-hero h2 {
+  font-size: 32px; font-weight: 700; line-height: 1.15;
+  letter-spacing: -0.02em; margin-bottom: 20px;
+}
+.case-hero-intro {
+  color: var(--text-light); font-size: 15px;
+  line-height: 1.6; margin-bottom: 32px;
+}
+.case-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  margin-bottom: 32px;
+}
+.stat-num {
+  font-size: 40px; font-weight: 700; color: var(--accent);
+  letter-spacing: -0.02em; line-height: 1;
+}
+.stat-label {
+  font-size: 12px; color: var(--text-muted);
+  margin-top: 6px; letter-spacing: 0.05em;
+}
+.case-link {
+  color: var(--accent); text-decoration: none; font-size: 14px;
+  font-weight: 600; display: inline-flex; gap: 6px;
+}
+.case-visual {
+  background: rgba(255, 107, 53, 0.08);
+  border: 1px solid rgba(255, 107, 53, 0.15);
+  border-radius: 16px; aspect-ratio: 4/5;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: var(--text-muted);
+}
+@media (max-width: 768px) {
+  .case-hero { padding: 32px; grid-template-columns: 1fr; gap: 32px; }
+  .case-hero h2 { font-size: 24px; }
+  .case-stats { gap: 12px; }
+  .stat-num { font-size: 28px; }
+}
+
+/* === OTHER CASES === */
+.cases-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.case-card {
+  background: white; border-radius: 16px; overflow: hidden;
+  border: 1px solid var(--border-light); transition: transform 0.2s;
+  cursor: pointer;
+}
+.case-card:hover { transform: translateY(-4px); }
+.case-card-visual {
+  height: 180px; background: linear-gradient(135deg, #F0F0F0, #E5E5E5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: var(--text-muted);
+}
+.case-card-body { padding: 24px; }
+.case-card-tag {
+  font-size: 11px; color: var(--accent); font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;
+}
+.case-card h3 {
+  font-size: 16px; font-weight: 700; line-height: 1.3;
+  margin-bottom: 16px; letter-spacing: -0.01em;
+}
+.case-card-link {
+  color: var(--accent); font-size: 13px; font-weight: 600;
+  text-decoration: none;
+}
+@media (max-width: 768px) { .cases-grid { grid-template-columns: 1fr; } }
+
+/* === DIFFERENTIATION === */
+.diff-list {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 20px; overflow: hidden;
+}
+.diff-row {
+  padding: 32px; border-bottom: 1px solid var(--border);
+  display: grid; grid-template-columns: 240px 1fr; gap: 32px;
+  align-items: start;
+}
+.diff-row:last-child { border-bottom: none; }
+.diff-vs {
+  font-size: 18px; font-weight: 700; letter-spacing: -0.01em;
+}
+.diff-vs span {
+  display: block; color: var(--accent); font-size: 11px;
+  font-weight: 600; letter-spacing: 0.15em;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.diff-row p { color: var(--text-light); font-size: 15px; line-height: 1.6; }
+@media (max-width: 768px) {
+  .diff-row { grid-template-columns: 1fr; gap: 12px; padding: 24px; }
+}
+
+/* === RGPD === */
+.rgpd-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+}
+.rgpd-card {
+  padding: 24px; background: white; border-radius: 12px;
+  border: 1px solid var(--border-light);
+}
+.rgpd-icon {
+  width: 36px; height: 36px; background: var(--accent-soft);
+  border-radius: 8px; display: flex; align-items: center;
+  justify-content: center; margin-bottom: 16px;
+  color: var(--accent); font-size: 18px;
+}
+.rgpd-card h3 {
+  font-size: 15px; font-weight: 700; margin-bottom: 8px;
+}
+.rgpd-card p { font-size: 13px; color: #555; line-height: 1.5; }
+@media (max-width: 768px) { .rgpd-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* === PRICING === */
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.pricing-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 40px 32px; position: relative;
+}
+.pricing-card.featured {
+  border: 2px solid var(--accent);
+  background: linear-gradient(180deg, rgba(255, 107, 53, 0.08), transparent);
+}
+.pricing-badge {
+  position: absolute; top: -12px; right: 24px;
+  background: var(--accent); color: white;
+  padding: 4px 12px; border-radius: 999px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.pricing-name {
+  font-size: 13px; font-weight: 600; color: var(--accent);
+  letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 12px;
+}
+.pricing-card h3 {
+  font-size: 28px; font-weight: 700; margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.pricing-tagline {
+  color: var(--text-muted); font-size: 14px; margin-bottom: 24px;
+}
+.pricing-features {
+  list-style: none; margin-bottom: 32px;
+  border-top: 1px solid var(--border); padding-top: 24px;
+}
+.pricing-features li {
+  font-size: 14px; color: var(--text-light); padding: 8px 0;
+  display: flex; align-items: start; gap: 10px;
+}
+.pricing-features li::before {
+  content: '→'; color: var(--accent); font-weight: 600;
+}
+@media (max-width: 768px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+/* === CTA FINAL === */
+.cta-final {
+  background: linear-gradient(135deg, var(--accent), #E55A2B);
+  border-radius: 24px; padding: 64px;
+  display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px;
+  align-items: center; color: white;
+}
+.cta-final h2 {
+  font-size: 40px; font-weight: 700; line-height: 1.1;
+  letter-spacing: -0.025em; margin-bottom: 20px;
+}
+.cta-final p {
+  font-size: 16px; line-height: 1.6; margin-bottom: 24px;
+  opacity: 0.92;
+}
+.cta-bullets { list-style: none; }
+.cta-bullets li {
+  padding: 6px 0; font-size: 14px; opacity: 0.92;
+}
+.cta-bullets li::before { content: '→ '; opacity: 0.7; }
+.form-card {
+  background: white; color: var(--text-primary);
+  border-radius: 16px; padding: 32px;
+}
+.form-label {
+  display: block; font-size: 13px; font-weight: 600;
+  margin-bottom: 6px; color: var(--text-primary);
+}
+.form-card input, .form-card select {
+  width: 100%; padding: 12px 14px; border: 1px solid var(--border-light);
+  border-radius: 8px; font-size: 14px; margin-bottom: 16px;
+  font-family: inherit; background: white;
+  transition: border-color 0.2s;
+}
+.form-card input:focus, .form-card select:focus {
+  outline: none; border-color: var(--accent);
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-row > div { display: flex; flex-direction: column; }
+.form-submit {
+  width: 100%; padding: 14px; background: var(--bg-dark); color: white;
+  border: none; border-radius: 8px; font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: background 0.2s; margin-top: 8px;
+}
+.form-submit:hover { background: var(--accent); }
+@media (max-width: 768px) {
+  .cta-final { padding: 32px; grid-template-columns: 1fr; gap: 32px; }
+  .cta-final h2 { font-size: 28px; }
+  .form-row { grid-template-columns: 1fr; }
+}
+
+/* === FOOTER === */
+footer {
+  background: var(--bg-dark); padding: 64px 0 32px;
+  border-top: 1px solid var(--border);
+}
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+  margin-bottom: 48px;
+}
+.footer-brand p {
+  font-size: 13px; color: var(--text-muted); margin-top: 12px;
+  max-width: 280px; line-height: 1.6;
+}
+.footer-col h4 {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 16px;
+  color: var(--text-on-dark);
+}
+.footer-col ul { list-style: none; }
+.footer-col li { padding: 6px 0; }
+.footer-col a {
+  color: var(--text-muted); font-size: 13px; text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-col a:hover { color: var(--text-on-dark); }
+.footer-bottom {
+  padding-top: 24px; border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: var(--text-muted);
+}
+@media (max-width: 768px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container">
+    <div class="logo">KEYZz<span>.io</span></div>
+    <ul class="nav-links">
+      <li><a href="#how">Comment ça marche</a></li>
+      <li><a href="#cases">Cas clients</a></li>
+      <li><a href="#pricing">Tarifs</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-ghost">Login</a>
+      <a href="#contact" class="btn btn-primary">Demander une démo</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div>
+      <div class="hero-kicker">RecallBy présente</div>
+      <h1>Vos clients viennent à votre événement.<br>Ils repartent. Vous ne savez plus rien d'eux.</h1>
+      <p class="hero-sub">KEYZz transforme chaque scan, chaque entrée, chaque achat en relation client identifiée et activable.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-primary btn-large">Demander une démo →</a>
+        <a href="#how" class="btn btn-secondary btn-large">Voir une Keyzz live</a>
+      </div>
+    </div>
+    <div class="hero-visual"></div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust">
+  <div class="container">
+    <div class="trust-label">Ils nous font confiance</div>
+    <div class="trust-logos">
+      <div class="trust-logo">[ Logo 1 ]</div>
+      <div class="trust-logo">[ Logo 2 ]</div>
+      <div class="trust-logo">[ Logo 3 ]</div>
+      <div class="trust-logo">[ Logo 4 ]</div>
+      <div class="trust-logo">[ Logo 5 ]</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="section-light">
+  <div class="container">
+    <div class="section-kicker">Le constat</div>
+    <h2 class="section-title">Le problème que vous connaissez déjà.</h2>
+    <p class="section-sub">3 douleurs que tout marketeur d'événement reconnaît. La solution est plus simple que vous ne le pensez.</p>
+    <div class="problems">
+      <div class="problem-card">
+        <div class="problem-num">01</div>
+        <h3>L'événement coûte cher</h3>
+        <p>Lieu, hôtesses, scénographie, talents, communication. Investissement lourd, retombées floues.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-num">02</div>
+        <h3>L'audience repart anonyme</h3>
+        <p>Pas d'email, pas d'opt-in, pas de comportement tracé. Des centaines de visages, zéro contact qualifié.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-num">03</div>
+        <h3>Le ROI est invisible</h3>
+        <p>Impossible de prouver l'impact, de retargeter, de réactiver. Le budget marketing repart à zéro.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="section-dark">
+  <div class="container">
+    <div class="section-kicker">Comment ça marche</div>
+    <h2 class="section-title">De l'événement à la base de données activable, en 3 étapes.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">ÉTAPE 01</div>
+        <h3>Vous créez votre Keyzz</h3>
+        <div class="step-visual">[ visuel back-office ]</div>
+        <p>Visuel, contenu, privilège. 10 minutes, sans code. L'équipe RecallBy vous accompagne pour le pilote.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">ÉTAPE 02</div>
+        <h3>Vos invités la débloquent</h3>
+        <div class="step-visual">[ visuel QR → app ]</div>
+        <p>QR code ou lien. Email + OTP. Aucune app à installer, aucun wallet à configurer. Moins de 30 secondes.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">ÉTAPE 03</div>
+        <h3>Vous récupérez la data</h3>
+        <div class="step-visual">[ visuel dashboard ]</div>
+        <p>Emails opt-in, analytics d'usage, exports CRM en 1 clic. La data appartient à votre marque.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE HERO -->
+<section id="cases" class="section-mid">
+  <div class="container">
+    <div class="section-kicker">Cas client vedette</div>
+    <div class="case-hero">
+      <div>
+        <div class="case-hero-tag">Luxe · Mode</div>
+        <h2>Comment Pressiat a transformé son défilé en base de 850 fans qualifiés.</h2>
+        <p class="case-hero-intro">Du QR code distribué en backstage à la réactivation pour la collection FW26. Un dispositif simple, un ROI mesurable.</p>
+        <div class="case-stats">
+          <div>
+            <div class="stat-num">87%</div>
+            <div class="stat-label">claim rate</div>
+          </div>
+          <div>
+            <div class="stat-num">850</div>
+            <div class="stat-label">opt-ins qualifiés</div>
+          </div>
+          <div>
+            <div class="stat-num">3,2x</div>
+            <div class="stat-label">CTR vs newsletter</div>
+          </div>
+        </div>
+        <a href="#" class="case-link">Lire le cas complet →</a>
+      </div>
+      <div class="case-visual">[ Visuel Pressiat ]</div>
+    </div>
+  </div>
+</section>
+
+<!-- OTHER CASES -->
+<section class="section-light">
+  <div class="container">
+    <div class="section-kicker">Aussi déployé chez</div>
+    <h2 class="section-title">3 secteurs, 3 récits.</h2>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-card-visual">[ Visuel DOVE-i ]</div>
+        <div class="case-card-body">
+          <div class="case-card-tag">Musique · DOVE-i</div>
+          <h3>Olympia 2026, 1 200 fans réactivés sur la tournée FW26</h3>
+          <a href="#" class="case-card-link">Lire →</a>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-card-visual">[ Visuel Renault ]</div>
+        <div class="case-card-body">
+          <div class="case-card-tag">Auto · Renault</div>
+          <h3>Lancement R5 — chaque essai concession devient un opt-in</h3>
+          <a href="#" class="case-card-link">Lire →</a>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-card-visual">[ Visuel Festival ]</div>
+        <div class="case-card-body">
+          <div class="case-card-tag">Festival · Live</div>
+          <h3>3 jours, 14 000 claims, 0 bracelet jeté</h3>
+          <a href="#" class="case-card-link">Lire →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFERENTIATION -->
+<section class="section-dark">
+  <div class="container">
+    <div class="section-kicker">Différenciation</div>
+    <h2 class="section-title">Pourquoi pas une newsletter, une app ou un NFT ?</h2>
+    <p class="section-sub">Les questions que nos clients posent avant de signer. Réponses honnêtes.</p>
+    <div class="diff-list">
+      <div class="diff-row">
+        <div class="diff-vs"><span>vs</span>Mailchimp / Klaviyo</div>
+        <p>Une newsletter capture des emails. KEYZz capture des emails + un comportement réel + un actif émotionnel que le fan veut garder.</p>
+      </div>
+      <div class="diff-row">
+        <div class="diff-vs"><span>vs</span>Une app dédiée</div>
+        <p>Pas d'install, pas de store, pas d'abandon à 70%. Un lien, un email, accès instantané sur tous les devices.</p>
+      </div>
+      <div class="diff-row">
+        <div class="diff-vs"><span>vs</span>Un NFT</div>
+        <p>Pas de wallet à créer, pas de gas, pas de spéculation. Le fan ne sait même pas qu'il y a une blockchain. La marque, oui.</p>
+      </div>
+      <div class="diff-row">
+        <div class="diff-vs"><span>vs</span>Un bracelet / goodie</div>
+        <p>Le souvenir physique finit à la poubelle. La Keyzz reste, se réactive, génère de la data réutilisable dans le temps.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RGPD -->
+<section class="section-light">
+  <div class="container">
+    <div class="section-kicker">Sécurité &amp; conformité</div>
+    <h2 class="section-title">La data appartient à la marque, pas à nous.</h2>
+    <p class="section-sub">Construit pour les exigences des directions juridiques et IT des grandes marques.</p>
+    <div class="rgpd-grid">
+      <div class="rgpd-card">
+        <div class="rgpd-icon">✓</div>
+        <h3>RGPD-ready</h3>
+        <p>Hébergement EU, opt-in clair, droit à l'effacement.</p>
+      </div>
+      <div class="rgpd-card">
+        <div class="rgpd-icon">↓</div>
+        <h3>Export libre</h3>
+        <p>CSV, API, intégrations CRM. La data est à vous.</p>
+      </div>
+      <div class="rgpd-card">
+        <div class="rgpd-icon">⚐</div>
+        <h3>Souverain</h3>
+        <p>Pas de revente, pas de profilage cross-marque.</p>
+      </div>
+      <div class="rgpd-card">
+        <div class="rgpd-icon">⚲</div>
+        <h3>Auditable</h3>
+        <p>Chaque interaction est tracée et vérifiable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="section-dark">
+  <div class="container">
+    <div class="section-kicker">Tarifs</div>
+    <h2 class="section-title">Tarifs adaptés à votre échelle.</h2>
+    <p class="section-sub">Du POC à la production multi-marques. Tous les détails sur demande.</p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-name">Plan 01</div>
+        <h3>Pilote</h3>
+        <div class="pricing-tagline">Pour un événement</div>
+        <ul class="pricing-features">
+          <li>1 collection</li>
+          <li>Jusqu'à 500 Keyzz</li>
+          <li>Setup inclus par RecallBy</li>
+          <li>Export CSV des opt-ins</li>
+        </ul>
+        <a href="#contact" class="btn btn-secondary" style="width: 100%; justify-content: center;">Démarrer un pilote</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Recommandé</div>
+        <div class="pricing-name">Plan 02</div>
+        <h3>Saison</h3>
+        <div class="pricing-tagline">Multi-événements</div>
+        <ul class="pricing-features">
+          <li>Volume négocié</li>
+          <li>API CRM (Salesforce, HubSpot)</li>
+          <li>Support dédié</li>
+          <li>Analytics avancés</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary" style="width: 100%; justify-content: center;">Demander une démo →</a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-name">Plan 03</div>
+        <h3>Enterprise</h3>
+        <div class="pricing-tagline">Plateforme</div>
+        <ul class="pricing-features">
+          <li>Studio B2B (post-MVP)</li>
+          <li>Multi-marques</li>
+          <li>SLA garanti</li>
+          <li>Account manager</li>
+        </ul>
+        <a href="#contact" class="btn btn-secondary" style="width: 100%; justify-content: center;">Nous contacter</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="contact" class="section-light">
+  <div class="container">
+    <div class="cta-final">
+      <div>
+        <h2>Votre prochain événement mérite mieux qu'un bracelet jetable.</h2>
+        <p>Échangez 30 min avec la team RecallBy : cadrage de votre cas, démo live de l'app, modèle commercial.</p>
+        <ul class="cta-bullets">
+          <li>Réponse sous 24h ouvrées</li>
+          <li>Démo live de l'app</li>
+          <li>Pas d'engagement</li>
+        </ul>
+      </div>
+      <div class="form-card">
+        <div class="form-row">
+          <div>
+            <label class="form-label">Nom complet *</label>
+            <input type="text" placeholder="Votre nom">
+          </div>
+          <div>
+            <label class="form-label">Email pro *</label>
+            <input type="email" placeholder="vous@entreprise.com">
+          </div>
+        </div>
+        <label class="form-label">Entreprise *</label>
+        <input type="text" placeholder="Nom de votre entreprise">
+        <label class="form-label">Secteur d'activité *</label>
+        <select>
+          <option>Sélectionnez un secteur</option>
+          <option>Marques &amp; Luxe</option>
+          <option>Événements &amp; Live</option>
+          <option>Sports &amp; Grands événements</option>
+          <option>Divertissement</option>
+          <option>Retail &amp; Malls</option>
+          <option>Artistes &amp; Labels</option>
+          <option>Agences</option>
+        </select>
+        <div class="form-row">
+          <div>
+            <label class="form-label">Date prochain événement</label>
+            <input type="text" placeholder="MM/AAAA">
+          </div>
+          <div>
+            <label class="form-label">Audience attendue</label>
+            <input type="text" placeholder="Ex : 500-1000">
+          </div>
+        </div>
+        <button class="form-submit">Demander une démo →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">KEYZz<span>.io</span></div>
+        <p>Un produit RecallBy. La couche d'activation post-expérience pour les marques qui veulent transformer leurs événements en relations client mesurables.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Produit</h4>
+        <ul>
+          <li><a href="#how">Comment ça marche</a></li>
+          <li><a href="#cases">Cas clients</a></li>
+          <li><a href="#pricing">Tarifs</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Légal</h4>
+        <ul>
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">Politique RGPD</a></li>
+          <li><a href="#">CGV</a></li>
+          <li><a href="#">Cookies</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:contact@keyzz.io">contact@keyzz.io</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#contact">Demander une démo</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 RecallBy — Tous droits réservés</div>
+      <div>Made in France 🇫🇷</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
