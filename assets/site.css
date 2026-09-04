@@ -1,0 +1,62 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: #0b0b0d;
+}
+
+body {
+  margin: 0;
+  background-color: #0b0b0d;
+  color: #ffffff;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* The design is authored on a fixed 1440px canvas. Above 1440px the page is
+   centred and rendered 1:1; below it, the whole canvas scales down
+   proportionally so the layout never breaks. */
+#stage {
+  width: 1440px;
+  transform-origin: top left;
+}
+
+/* The nav, lifted out of #stage by site.js: a full-bleed opaque bar pinned to
+   the viewport, holding the canvas-scaled nav. motion.js paints it with the
+   background colour of the section running under it. */
+#kz-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5000;
+  background-color: #0b0b0d;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  transition: background-color 0.35s ease, border-color 0.35s ease;
+}
+#kz-nav.is-light {
+  border-bottom-color: rgba(11, 11, 13, 0.08);
+}
+#kz-nav-canvas {
+  width: 1440px;
+  transform-origin: top left;
+}
+
+.kz-link {
+  color: inherit;
+  text-decoration: none;
+  display: contents;
+}
+
+[data-name="Lien Produit"],
+[data-name="FAQ"],
+[data-name="Marque"],
+[data-name="Bouton"],
+[data-name="Bouton primaire"],
+[data-name="Bouton secondaire"] {
+  cursor: pointer;
+}

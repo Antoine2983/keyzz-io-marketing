@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      *, ::before, ::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+    </style>
+
+    <style>
+      body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body style="background-color: #0B0B0D">
+    <div
+      data-pencil-name="Bandeau logos"
+      style="align-items: center; background-color: #00000000; border-color: #2A2A2E; border-style: solid; border-width: 1px 0px 1px 0px; box-sizing: content-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 60px; height: 110px; justify-content: center; margin: -0.5px 0px -0.5px 0px; overflow: hidden; padding: 0px 60px; position: relative; width: 1440px"
+    >
+      <div
+        data-pencil-name="Logo TheFork"
+        style="background-image: url('data:image/png;base64,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'); background-position: center; background-repeat: no-repeat; background-size: contain; box-sizing: border-box; flex-shrink: 0; height: 19.835px; position: relative; width: 99.176px; z-index: 0"
+      ></div>
+      <div
+        style="background-color: #2A2A2E; box-sizing: border-box; flex-shrink: 0; height: 100%; position: relative; width: 1px; z-index: 1"
+      ></div>
+      <div
+        data-pencil-name="Logo Wemind"
+        style="background-image: url('data:image/png;base64,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'); background-position: center; background-repeat: no-repeat; background-size: contain; box-sizing: border-box; flex-shrink: 0; height: 17.71px; position: relative; width: 76.532px; z-index: 2"
+      ></div>
+      <div
+        style="background-color: #2A2A2E; box-sizing: border-box; flex-shrink: 0; height: 100%; position: relative; width: 1px; z-index: 3"
+      ></div>
+      <div
+        data-pencil-name="Frame 6193"
+        style="box-sizing: border-box; flex-shrink: 0; height: 17.71px; position: relative; width: 72.919px; z-index: 4"
+      >
+        <div
+          data-pencil-name="Group"
+          style="box-sizing: border-box; height: 15.802px; left: 20.889px; position: absolute; top: 0.959px; width: 52.03px; z-index: 0"
+        >
+          <svg
+            data-pencil-name="Vector"
+            viewBox="0 0 273.70001220703125 346.9000244140625"
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="box-sizing: border-box; height: 15.247px; left: 0px; overflow: visible; position: absolute; top: 0.392px; width: 12.029px; z-index: 0"
+          >
+            <path
+              d="M273.70001 29.5l0 23.5-104.40002 0 0 293.90002-35 0c-16.30001 0-29.5-13.20001-29.5-29.5l0-264.40002-75.29999 0c-16.3 0-29.5-13.2-29.5-29.5l0-23.5 244.20001 0c16.29999 0 29.5 13.2 29.5 29.5z"
+              fill="#ffffffff"
+            ></path>
+          </svg>
+          <svg
+            data-pencil-name="Vector"
+            viewBox="-0.00000286102294921875 0.0000095367431640625 75.7999906539917 355.7000026702881"
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="box-sizing: border-box; height: 15.633px; left: 13.56px; overflow: visible; position: absolute; top: 0px; width: 3.331px; z-index: 1"
+          >
+            <path
+              d="M75.79999 37.9c0 5.1-0.99998 9.89999-3.09998 14.4-2.1 4.5-4.79999 8.4-8.29999 11.8-3.5 3.4-7.50004 6-12.10003 8-4.6 2-9.59996 3-14.89997 3-5.3 0-10-1-14.5-3-4.5-2-8.50002-4.7-11.90002-8-3.4-3.3-6-7.3-8-11.8-2-4.5-3-9.3-3-14.4 0-5.1 1-10.20001 3-14.90001 2-4.6 4.7-8.59999 8-11.99999 3.3-3.4 7.30002-6 11.90002-8 4.6-2 9.4-3 14.5-3 5.1 0 10.19996 1 14.89997 3 4.7 2 8.70003 4.7 12.10003 8 3.4 3.3 6.19999 7.39999 8.29999 11.99999 2.1 4.6 3.09998 9.60001 3.09998 14.90001z m-8.89997 101.20001l0 216.6-29.70001 0c-16.3 0-29.5-13.20001-29.5-29.5l0-216.60001 29.70001 0c16.3 0 29.5 13.2 29.5 29.50001z"
+              fill="#ffffffff"
+            ></path>
+          </svg>
+          <svg
+            data-pencil-name="Vector"
+            viewBox="-0.00000286102294921875 0.0000095367431640625 75.7999906539917 355.7000026702881"
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="box-sizing: border-box; height: 15.633px; left: 19.317px; overflow: visible; position: absolute; top: 0px; width: 3.331px; z-index: 2"
+          >
+            <path
+              d="M75.79999 37.9c0 5.1-0.99998 9.89999-3.09998 14.4-2.1 4.5-4.79999 8.4-8.29999 11.8-3.5 3.4-7.50004 6-12.10003 8-4.6 2-9.59996 3-14.89997 3-5.3 0-10-1-14.5-3-4.5-2-8.50002-4.7-11.90002-8-3.4-3.3-6-7.3-8-11.8-2-4.5-3-9.3-3-14.4 0-5.1 1-10.20001 3-14.90001 2-4.6 4.7-8.59999 8-11.99999 3.3-3.4 7.30002-6 11.90002-8 4.6-2 9.4-3 14.5-3 5.1 0 10.19996 1 14.89997 3 4.7 2 8.70003 4.7 12.10003 8 3.4 3.3 6.19999 7.39999 8.29999 11.99999 2.1 4.6 3.09998 9.60001 3.09998 14.90001z m-8.89997 101.20001l0 216.6-29.70001 0c-16.3 0-29.5-13.20001-29.5-29.5l0-216.60001 29.70001 0c16.3 0 29.5 13.2 29.5 29.50001z"
+              fill="#ffffffff"
+            ></path>
+          </svg>
+          <svg
+            data-pencil-name="Vector"
+            viewBox="-0.0000152587890625 -0.00000667572021484375 345.80006408691406 250.09998226165771"
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="box-sizing: border-box; height: 10.992px; left: 25.067px; overflow: visible; position: absolute; top: 4.654px; width: 15.198px; z-index: 3"
+          >
+            <path
+              d="M0.20007 220.3l0-216.6 26.29993 0.19999c15.9 0.1 28.80003 13.00001 28.90002 28.90001 4.3-4.8 8.79997-9.20001 13.59998-13.20001 4.7-4 9.79997-7.39999 15.09998-10.29999 5.3-2.9 11.10005-5.2 17.30004-6.8 6.2-1.6 12.90005-2.5 20.30005-2.5 15.5 0 28.29993 4.19999 38.29993 12.59999 10 8.4 17.50003 19.6 22.40002 33.5 3.80001-8.2 8.60003-15.1 14.40003-21 5.8-5.8 12.10002-10.59999 18.90002-14.29999 6.9-3.7 14.19991-6.40001 21.89991-8.20001 7.8-1.8 15.60002-2.59999 23.40002-2.59999 13.60001 0 25.70007 2.1 36.20007 6.2 10.60001 4.2 19.39997 10.2 26.59998 18.19999 7.20001 8 12.70001 17.8 16.40002 29.30001 3.79999 11.5 5.59998 24.7 5.59998 39.6l0 156.69998-59.30005 0 0-156.69998c0-15.7-3.39993-27.49999-10.29993-35.39999-6.89999-7.9-17.00006-11.90002-30.20007-11.90003-13.2 0-11.70003 1.00001-16.90002 3.10001-5.2 2.1-9.79996 5.1-13.69996 9-3.89999 3.9-6.99995 8.80002-9.19995 14.80002-2.19999 5.9-3.40002 12.7-3.40002 20.39999l0 156.69998-30 0c-16.3 0-29.5-13.19999-29.5-29.5l0-127.09997c0-16.5-3.3-28.5-10-36-6.7-7.5-16.40003-11.30002-29.40003-11.30002-13 0-16.40002 2.09999-23.90002 6.39999-7.4 4.2-14.39992 10.00002-20.79993 17.40003l0 180.19998-29.70007 0c-16.3 0-29.5-13.2-29.5-29.5l0.20007-0.29999z"
+              fill="#ffffffff"
+            ></path>
+          </svg>
+          <svg
+            data-pencil-name="Vector"
+            viewBox="-9.5367431640625e-7 -0.00001640617847442627 225.19995212554932 253.80000419914722"
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="box-sizing: border-box; height: 11.155px; left: 42.133px; overflow: visible; position: absolute; top: 4.648px; width: 9.898px; z-index: 4"
+          >
+            <path
+              d="M118.69995 0c15.5 0 29.80005 2.50001 42.80005 7.40001 13 5 24.29996 12.2 33.69995 21.7 9.4 9.5 16.79997 21.19999 22.09998 34.99998 5.3 13.8 7.90002 29.60002 7.90002 47.40003 0 17.8-0.19998 8.19998-0.59997 11.19998-0.4 3-1.09995 5.3-2.19996 7-1.1 1.69999-2.40007 2.90001-4.20007 3.6-1.8 0.7-3.99995 1.10001-6.69995 1.10001l-152.09998 0c1.8 25.3 8.5999 43.79999 20.39991 55.69998 11.8 11.8 27.5 17.80002 47 17.80002 19.5 0 17.90005-1.09999 24.80005-3.39999 7-2.2 12.99995-4.70003 18.19995-7.40003 1.39999-0.7 3.69999-2 6.5-3.5 12.8-6.89999 28.69999-3.5 37.5 8l9.10009 11.90003c-6.6 7.69999-13.9001 14.09999-22.10009 19.29998-8.2 5.2-16.69998 9.4-25.59998 12.5-8.89999 3.10001-17.89998 5.30001-27.09997 6.60001-9.2 1.3-18.10006 1.89999-26.80005 1.89999-17.1 0-32.99993-2.8-47.79993-8.5-14.8-5.69999-27.50002-14.1-38.40002-25.20001-10.9-11.10001-19.39995-24.89999-25.69996-41.29999-6.2-16.39999-9.40002-35.39999-9.40002-57 0-21.6 2.69995-32.59999 8.19995-47.39999 5.4-14.8 13.20002-27.7 23.40003-38.60001 10.2-10.9 22.59995-19.6 37.19995-26 14.6-6.4 31.20009-9.60001 49.60009-9.6l0.29993-0.2z m1.20007 42.40001c-17.3 0-30.80009 4.90001-40.60009 14.6-9.8 9.8-15.99995 23.6-18.69995 41.50001l111.30004-0.00001c0-7.7-1.00009-14.90001-3.10009-21.70001-2.10001-6.8-5.29998-12.8-9.59998-17.89999-4.3-5.1-9.79993-9.10001-16.29993-12.10001-6.6-3-14.19999-4.39999-23-4.39999z"
+              fill="#ffffffff"
+            ></path>
+          </svg>
+        </div>
+        <div
+          data-pencil-name="Group"
+          style="box-sizing: border-box; height: 17.712px; left: -0.001px; position: absolute; top: -0.001px; width: 15.775px; z-index: 1"
+        >
+          <svg
+            data-pencil-name="Vector"
+            viewBox="-0.0000152587890625 -0.000003814697265625 167.3000030517578 129.62500381469727"
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="box-sizing: border-box; height: 5.697px; left: 3.48px; overflow: visible; position: absolute; top: 0px; width: 7.353px; z-index: 0"
+          >
+            <path
+              d="M0 129.625l100.2-57.89999 67.1-38.80001-48.3-27.9c-11.6-6.7-25.99999-6.7-37.59999 0l-81.40001 47.00001 0 77.5 0 0.09999z"
+              fill="#ffffffff"
+            ></path>
+          </svg>
+          <svg
+            data-pencil-name="Vector"
+            viewBox="0 0 67.0999984741211 193.30001831054688"
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="box-sizing: border-box; height: 8.496px; left: 0px; overflow: visible; position: absolute; top: 2.598px; width: 2.949px; z-index: 1"
+          >
+            <path
+              d="M67.1 193.2l0-193.2-48.3 27.90001c-11.6 6.7-18.8 19.09999-18.8 32.59999l0 94.00002 67.1 38.79998 0-0.1z"
+              fill="#ffffffff"
+            ></path>
+          </svg>
+          <svg
+            data-pencil-name="Vector"
+            viewBox="0 -0.000003814697265625 167.29998779296875 135.4000129699707"
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="box-sizing: border-box; height: 5.951px; left: 8.422px; overflow: visible; position: absolute; top: 1.764px; width: 7.353px; z-index: 2"
+          >
+            <path
+              d="M0 38.7l100.19998 57.90001 67.10001 38.8 0-55.8c0-13.4-7.19998-25.9-18.79999-32.60001l-81.39999-47-67.10001 38.8 0-0.1z"
+              fill="#ffffffff"
+            ></path>
+          </svg>
+          <svg
+            data-pencil-name="Vector"
+            viewBox="0.00000762939453125 0 167.4000015258789 135.39999389648438"
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="box-sizing: border-box; height: 5.951px; left: 0px; overflow: visible; position: absolute; top: 10.001px; width: 7.357px; z-index: 3"
+          >
+            <path
+              d="M167.39999 96.69998l-100.19999-57.89999-67.2-38.79999 0 55.79999c0 13.4 7.2 25.90001 18.8 32.6l81.4 47 67.1-38.79998 0.09999 0.09997z"
+              fill="#ffffffff"
+            ></path>
+          </svg>
+          <svg
+            data-pencil-name="Vector"
+            viewBox="-0.00000762939453125 -0.000003814697265625 67.10001373291016 193.29999160766602"
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="box-sizing: border-box; height: 8.496px; left: 12.826px; overflow: visible; position: absolute; top: 6.616px; width: 2.949px; z-index: 4"
+          >
+            <path
+              d="M0 0.09999l0 193.2 48.30002-27.9c11.6-6.69999 18.79999-19.1 18.79999-32.6l0-94-67.10001-38.79999 0 0.09999z"
+              fill="#ffffffff"
+            ></path>
+          </svg>
+          <svg
+            data-pencil-name="Vector"
+            viewBox="0 0 167.30001831054688 129.625"
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="box-sizing: border-box; height: 5.697px; left: 4.939px; overflow: visible; position: absolute; top: 12.015px; width: 7.353px; z-index: 5"
+          >
+            <path
+              d="M167.30002 0l-100.20002 57.89999-67.1 38.80002 48.3 27.9c11.6 6.69999 26.00001 6.69999 37.6 0l81.40002-47 0-77.5 0-0.10001z"
+              fill="#ffffffff"
+            ></path>
+          </svg>
+        </div>
+      </div>
+      <div
+        style="background-color: #2A2A2E; box-sizing: border-box; flex-shrink: 0; height: 100%; position: relative; width: 1px; z-index: 5"
+      ></div>
+      <div
+        data-pencil-name="Frame 2147223761"
+        style="box-sizing: border-box; flex-shrink: 0; height: 17.71px; position: relative; width: 46.878px; z-index: 6"
+      >
+        <svg
+          data-pencil-name="Vector"
+          viewBox="-0.00000762939453125 -8.344650268554688e-7 312.08878326416016 334.5903023481369"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style="box-sizing: border-box; height: 13.003px; left: 28.457px; overflow: visible; position: absolute; top: 4.464px; width: 12.129px; z-index: 0"
+        >
+          <path
+            d="M189 0.7363c6.89-0.674 13.81999-0.886 20.73999-0.633 110.98999 4.021 102.59998 118.16398 101.96997 199.17798-0.35001 45.013 0.95001 90.31302-0.84997 135.30902-31.89002-0.30801-64.64 0.43298-96.38001-0.83203 1.73-61.91299-0.56993-126.05496-0.54993-187.99896 0.02001-43.488-38-57.26403-74.11999-45.21903-17.02001 5.67501-25.56009 20.861-32.22009 36.194-12.35 37.887-10.30002 75.01601-10.27002 114.29901 0.17 27.81299 0.06003 55.62702-0.34998 83.43702-32.06-0.96-64.62997 0.84298-96.96997-0.73603 1.18-7.14099 0.51001-51.01699 0.51001-60.151l-0.04004-167.78399c-0.01-13.42301-1.28998-92.15799 2.02002-96.18299 11.56-5.204 67.41995-0.79502 83.19995-1.42102 8.84-0.35 6.95012 47.68299 13.62012 58.564l1.53992 0.24801c7.47-9.645 12.06005-21.048 21.31005-31.461 20.38001-22.929 37.27997-31.9 66.83997-34.80999z"
+            fill="#ffffffff"
+          ></path>
+        </svg>
+        <svg
+          data-pencil-name="Vector"
+          viewBox="0.000026281923055648804 8.344650268554688e-7 311.59933895245194 333.5555716753006"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style="box-sizing: border-box; height: 12.963px; left: 13.536px; overflow: visible; position: absolute; top: 4.746px; width: 12.11px; z-index: 1"
+        >
+          <path
+            d="M1.856 0.4733c20.657-0.492 78.51398-1.26 95.85498 1.746-0.276 1.732-0.69595 4.599-0.68696 6.336 0.201 36.446-0.38605 72.69403-0.07605 109.15503 0.509 30.308-1.55194 59.13997 2.10706 89.42596 5.307 43.913 62.971 50.25302 90.78401 24.46802 12.074-11.194 14.95896-25.55702 18.10296-41.14502 6.918-34.301 5.24803-69.42198 5.22504-104.28998-0.185-28.538-0.10703-57.07701 0.23297-85.61401 12.804-0.434 91.12495-1.69599 97.08696 2.07 1.61301 10.65 0.99704 37.54399 0.99603 49.10199l-0.04803 91.85401-0.16797 183.64502c-27.23902-0.202-64.45998-1.14704-91.07298 0.00598-3.625-19.99899-3.642-35.86197-9.10401-56.45398-5.05499 5.80399-8.22798 13.95599-12.19897 20.21399-8.569 13.50601-27.35805 29.28101-42.61805 34.57501-30.71199 10.16699-74.695 11.57898-104.57001-1.33203-38.769-16.75601-50.33801-69.49197-50.992-107.31598-1.125-65.078-0.01398-130.48402-0.65698-195.60202-0.055-5.569-0.411-16.01999 1.802-20.84399z"
+            fill="#ffffffff"
+          ></path>
+        </svg>
+        <svg
+          data-pencil-name="Vector"
+          viewBox="0 -0.0000017285346984863281 298.9669189453125 446.9553545117378"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style="box-sizing: border-box; height: 17.37px; left: 0px; overflow: visible; position: absolute; top: 0px; width: 11.619px; z-index: 2"
+        >
+          <path
+            d="M0 0.85589c11.661-0.932 92.61298-1.60602 100.47998 0.76898 1.29 11.066 0.91399 33.30102 0.926 45.23902l-0.004 76.75399c-0.038 76.971 0.75302 155.48503-0.40698 232.31901 45.64999 2.70801 100.5-2.01501 146.53399-6.91901 7.855-0.836 15.37201-2.76397 23.388-2.84497 8.13501 0.944 21.91202-1.38803 25.42401 2.47797 4.24399 17.81299 2.85498 78.125-0.70202 97.30499-8.77701-0.483-8.21299 0.76099-15.232 0.81l-45.867-0.026-156.88999 0.01904c-13.822 0.00299-61.58602 0.87897-73.65802-1.09302-0.976-2.18899-0.93798-2.33398-1.02798-4.76898l-1.668-2.10803c-1.706-4.215-0.79001-61.37997-0.76501-69.19898l-0.03901-255.25202 0.11402-73.057c0.04-9.92 0.71101-31.19799-0.60599-40.42499z"
+            fill="#ffffffff"
+          ></path>
+        </svg>
+        <svg
+          data-pencil-name="Vector"
+          viewBox="-0.0000017881393432617188 -0.0000152587890625 100.84749019145966 326.47911071777344"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style="box-sizing: border-box; height: 12.688px; left: 42.961px; overflow: visible; position: absolute; top: 4.783px; width: 3.919px; z-index: 3"
+        >
+          <path
+            d="M1.10441 0c14.58 2.243 86.33989-2.70999 92.13989 4.05701 0.45 4.693-0.2499 4.241 2.1001 7.72l1.90991 0.36801c1.72-4.432-0.72002-6.50699 1.35999-8.41299l0.83007 0.25c2.64 73.823 0.74997 157.92797 0.71997 232.34896l-0.10998 54.41901c-0.09 9.92401-0.75005 25.914 0.31995 35.117-32.03 1.13401-67.86001 0.38501-100.12 0.17402 1.49-19.154 0.21008-61.36103 0.21008-81.92102l-0.04004-165.085c-0.03-17.795-1.28995-62.873 0.68006-79.035z"
+            fill="#ffffffff"
+          ></path>
+        </svg>
+        <svg
+          data-pencil-name="Vector"
+          viewBox="-7.450580596923828e-7 0.0000028908252716064453 90.7052848637104 320.6793794333935"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style="box-sizing: border-box; height: 12.462px; left: 43.062px; overflow: visible; position: absolute; top: 4.919px; width: 3.525px; z-index: 4"
+        >
+          <path
+            d="M27.65216 0.15421c11.83-0.23 23.66011-0.20302 35.49011 0.08298 5.84 0.129 18.80999 0.78101 24.23999 0.057 5.76 28.217 2.32999 52.52501 2.10998 80.92902-0.21 26.41799-0.09009 52.99295-0.09009 79.42495l0.06006 93.46204c0.08 20.25101 1.18005 45.88998-1.57995 65.36499 1.37-0.362-17.88004 0.68002-17.67005 0.67401-9.17 0.57599-58.72995 1.17697-65.32995-1.08002 0.38-2.281 0.62-2.66601-0.25-4.69702l-2.66004-0.36694c-2.67-3.685-1.70995-35.71402-1.69995-42.45801l-0.02002-71.91601-0.02002-118.866c0-9.444-1.35004-72.623 2.45997-77.311 7.27-3.531 16.93996-3.21199 24.95996-3.29999z"
+            fill="#ffffffff"
+          ></path>
+        </svg>
+        <svg
+          data-pencil-name="Vector"
+          viewBox="-0.000006794929504394531 4.76837158203125e-7 304.906867146492 106.02270460128784"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style="box-sizing: border-box; height: 4.12px; left: 0.016px; overflow: visible; position: absolute; top: 13.345px; width: 11.849px; z-index: 5"
+        >
+          <path
+            d="M270.51324 2.76384c6.93201-1.006 28.003-4.64401 33.732-1.52802 0.95599 9.659 0.14603 19.46297 0.46301 29.04297 0.79199 23.94-1.10501 51.38403-0.151 74.93903-11.664 1.269-31.76205 0.66-44.09204 0.651l-77.17297-0.04498-125.46798 0.04797c-9.003 0-50.999 0.54199-56.38401-1.09601-2.082-2.79799-1.47402-3.16698-0.83902-7.47198l0.29102-1.92401 1.668 2.10803c0.09 2.435 0.05198 2.57998 1.02798 4.76898 12.072 1.972 59.83602 1.09602 73.65802 1.09302l156.88998-0.01904 45.867 0.026c7.01902-0.04901 6.45499-1.293 15.232-0.81 3.55701-19.18 4.94601-79.49199 0.70203-97.30499-3.512-3.866-17.28901-1.53397-25.42402-2.47797z"
+            fill="#ffffffff"
+          ></path>
+        </svg>
+        <svg
+          data-pencil-name="Vector"
+          viewBox="0 -0.0000021457672119140625 98.87000274658203 13.194631814956665"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style="box-sizing: border-box; height: 0.513px; left: 43.003px; overflow: visible; position: absolute; top: 4.742px; width: 3.842px; z-index: 6"
+        >
+          <path
+            d="M0 1.04961c12.58-1.686 86.27997-1.364 97.83997 1.134l1.03003 1.43402-0.53003 1.41401-0.83008-0.25c-2.08 1.906 0.36002 3.98099-1.35999 8.41299l-1.90991-0.36801c-2.35-3.479-1.6501-3.027-2.1001-7.72-5.8-6.767-77.55989-1.81401-92.13989-4.05701z"
+            fill="#ffffffff"
+          ></path>
+        </svg>
+      </div>
+      <div
+        style="background-color: #2A2A2E; box-sizing: border-box; flex-shrink: 0; height: 100%; position: relative; width: 1px; z-index: 7"
+      ></div>
+      <div
+        data-pencil-name="Group 63"
+        style="box-sizing: border-box; flex-shrink: 0; height: 21.606px; position: relative; width: 112.739px; z-index: 8"
+      >
+        <div
+          data-pencil-name="Frame 2147223708"
+          style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; gap: 6.602px; height: 21.606px; justify-content: flex-start; left: 0px; position: absolute; top: 0px; width: 112.739px; z-index: 0"
+        >
+          <div
+            data-pencil-name="Group 61"
+            style="box-sizing: border-box; flex-shrink: 0; height: 21.606px; position: relative; width: 21.606px"
+          >
+            <div
+              data-pencil-name="Secondary Transparent 1"
+              style="box-sizing: border-box; height: 21.606px; left: 0px; overflow: hidden; position: absolute; top: 0px; width: 21.606px; z-index: 0"
+            >
+              <svg
+                data-pencil-name="Vector"
+                viewBox="0 0 240 173.06800842285156"
+                preserveAspectRatio="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style="box-sizing: border-box; height: 14.607px; left: 0.675px; overflow: visible; position: absolute; top: 3.501px; width: 20.256px; z-index: 0"
+              >
+                <path
+                  d="M120 0l-120 86.55301 120 86.515 120-86.515-120-86.55301z"
+                  fill="#fafafaff"
+                ></path>
+              </svg>
+              <svg
+                data-pencil-name="Vector"
+                viewBox="0 0 240 173.0989990234375"
+                preserveAspectRatio="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style="box-sizing: border-box; height: 14.609px; left: 0.675px; overflow: visible; position: absolute; top: 0.423px; width: 20.256px; z-index: 1"
+              >
+                <path
+                  d="M120 173.099l120-86.5503-120-86.5487-120 86.5487 120 86.5503z"
+                  fill="#fafafaff"
+                ></path>
+              </svg>
+              <svg
+                data-pencil-name="Vector"
+                viewBox="0 -0.00000762939453125 240 173.09720611572266"
+                preserveAspectRatio="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style="box-sizing: border-box; height: 14.609px; left: 0.675px; overflow: visible; position: absolute; top: 3.511px; width: 20.256px; z-index: 2"
+              >
+                <path
+                  d="M120 0l-120 86.5482 120 86.549 120-86.549-120-86.5482z"
+                  fill="#fafafaff"
+                ></path>
+              </svg>
+              <svg
+                data-pencil-name="Vector"
+                viewBox="0 0 240 173.05999755859375"
+                preserveAspectRatio="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style="box-sizing: border-box; height: 14.606px; left: 0.675px; overflow: visible; position: absolute; top: 6.583px; width: 20.256px; z-index: 3"
+              >
+                <path
+                  d="M120 0l-120 86.514 120 86.546 120-86.548-120-86.512z"
+                  fill="#fafafaff"
+                ></path>
+              </svg>
+              <svg
+                data-pencil-name="Vector"
+                viewBox="0 -0.0000057220458984375 189.4377899169922 136.56992149353027"
+                preserveAspectRatio="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style="box-sizing: border-box; height: 11.526px; left: 2.807px; overflow: visible; position: absolute; top: 6.583px; width: 15.988px; z-index: 4"
+              >
+                <path
+                  d="M0 68.2849l94.7188 68.28502 94.71899-68.28502-55.42699-39.969-39.292-28.3159-94.7188 68.2849z"
+                  fill="#9b9b9bff"
+                ></path>
+              </svg>
+              <svg
+                data-pencil-name="Vector"
+                viewBox="0 0 189.4377899169922 136.60350036621094"
+                preserveAspectRatio="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style="box-sizing: border-box; height: 11.529px; left: 2.807px; overflow: visible; position: absolute; top: 3.502px; width: 15.988px; z-index: 5"
+              >
+                <path
+                  d="M0 68.2845l94.7188 68.319 94.71899-68.319-94.71899-68.2845-94.7188 68.2845z"
+                  fill="#585858ff"
+                ></path>
+              </svg>
+              <svg
+                data-pencil-name="Vector"
+                viewBox="0 -0.000003814697265625 138.80630493164062 100.10989761352539"
+                preserveAspectRatio="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style="box-sizing: border-box; height: 8.449px; left: 4.944px; overflow: visible; position: absolute; top: 6.583px; width: 11.715px; z-index: 6"
+              >
+                <path
+                  d="M0 50.05491l69.40331 50.05499 69.40299-50.05499-69.403-50.05491-69.4033 50.05491z"
+                  fill="#2b2b2bff"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <div
+            data-pencil-name="Group 62"
+            style="box-sizing: border-box; flex-shrink: 0; height: 14.558px; position: relative; width: 81.111px"
+          >
+            <svg
+              data-pencil-name="Scenario"
+              viewBox="-2.384185791015625e-7 1.4901161193847656e-7 56.58504891395569 10.262000888586044"
+              preserveAspectRatio="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style="box-sizing: border-box; height: 14.558px; left: 0px; overflow: visible; position: absolute; top: 0px; width: 81.111px; z-index: 0"
+            >
+              <path
+                d="M3.85 10.262c-0.96133 0-1.77333-0.21467-2.436-0.644-0.66267-0.42933-1.134-1.022-1.414-1.778l1.652-0.966c0.38267 0.99867 1.134 1.498 2.254 1.498 0.52267 0 0.91467-0.09333 1.176-0.28 0.26133-0.18667 0.392-0.43867 0.392-0.756 0-0.34533-0.154-0.61133-0.462-0.798-0.308-0.196-0.85867-0.406-1.652-0.63-0.85867-0.26133-1.53533-0.56467-2.03-0.91-0.616-0.45733-0.924-1.12933-0.924-2.016 0-0.896 0.31267-1.60067 0.938-2.114 0.62533-0.532 1.386-0.798 2.282-0.798 0.784 0 1.47933 0.19133 2.086 0.574 0.60667 0.38267 1.078 0.924 1.414 1.624l-1.624 0.938c-0.392-0.84-1.01733-1.26-1.876-1.26-0.392 0-0.70467 0.09333-0.938 0.28-0.23333 0.17733-0.35 0.41067-0.35 0.7 0 0.308 0.126 0.56 0.378 0.756 0.28 0.196 0.77467 0.40133 1.484 0.616l0.672 0.224c0.12133 0.03733 0.33133 0.11667 0.63 0.238 0.28 0.10267 0.48533 0.20067 0.616 0.294 0.45733 0.28 0.76533 0.56933 0.924 0.868 0.24267 0.392 0.364 0.854 0.364 1.386 0 0.90533-0.33133 1.624-0.994 2.156-0.66267 0.532-1.51667 0.798-2.562 0.798z m8.25552 0c-1.05467 0-1.93667-0.35467-2.646-1.064-0.7-0.70933-1.05-1.58667-1.05-2.632 0-1.04533 0.35-1.92267 1.05-2.632 0.70933-0.70933 1.59133-1.064 2.646-1.064 0.68133 0 1.302 0.16333 1.862 0.49 0.56 0.32667 0.98467 0.76533 1.274 1.316l-1.554 0.91c-0.14-0.28933-0.35467-0.518-0.644-0.686-0.28-0.168-0.59733-0.252-0.952-0.252-0.54133 0-0.98933 0.182-1.344 0.546-0.35467 0.35467-0.532 0.812-0.53201 1.372 0 0.54133 0.17733 0.99867 0.53201 1.372 0.35467 0.35467 0.80267 0.532 1.344 0.532 0.364 0 0.686-0.07933 0.966-0.238 0.28933-0.168 0.504-0.39667 0.644-0.686l1.568 0.896c-0.308 0.56-0.74667 1.00333-1.316 1.33-0.56 0.32667-1.176 0.49-1.848 0.49z m10.81379-2.954l-5.278 0c0.23333 0.87733 0.89133 1.316 1.974 1.316 0.69067 0 1.21333-0.23333 1.568-0.7l1.456 0.84c-0.69067 0.99867-1.708 1.498-3.052 1.498-1.15733 0-2.086-0.35-2.786-1.05-0.7-0.7-1.05-1.582-1.05-2.646 0-1.04533 0.34533-1.92267 1.036-2.632 0.68133-0.70933 1.568-1.064 2.66-1.064 1.036 0 1.88067 0.35467 2.534 1.064 0.672 0.70933 1.008 1.58667 1.008 2.632 0 0.196-0.02333 0.44333-0.07 0.742z m-5.306-1.4l3.57 0c-0.10267-0.45733-0.31267-0.80733-0.63-1.05-0.308-0.24267-0.67667-0.364-1.106-0.364-0.48533 0-0.88667 0.126-1.204 0.378-0.31733 0.24267-0.52733 0.588-0.63 1.036z m10.52877-3.038c0.77467 0 1.40466 0.25667 1.89 0.77 0.504 0.52267 0.756 1.232 0.756 2.128l0 4.298-1.806 0 0-4.074c0-0.45733-0.126-0.812-0.378-1.064-0.24267-0.252-0.57867-0.378-1.008-0.378-0.476 0-0.854 0.14933-1.134 0.448-0.27067 0.28933-0.406 0.71867-0.406 1.288l0 3.78-1.806 0 0-7 1.806 0 0 0.784c0.42933-0.65333 1.12467-0.98 2.086-0.98z m9.50808 1.022l0-0.826 1.806 0 0 7-1.806 0 0-0.826c-0.54133 0.68133-1.302 1.022-2.282 1.022-0.93333 0-1.736-0.35467-2.408-1.064-0.66267-0.71867-0.994-1.596-0.994-2.632 0-1.02667 0.33134-1.89933 0.994-2.618 0.672-0.71867 1.47466-1.078 2.408-1.078 0.98 0 1.74067 0.34067 2.282 1.022z m-3.332 4.102c0.364 0.364 0.826 0.546 1.386 0.546 0.56 0 1.022-0.182 1.386-0.546 0.37333-0.37333 0.56-0.84933 0.56-1.428 0-0.57867-0.18667-1.05-0.56-1.414-0.364-0.37333-0.826-0.56-1.386-0.56-0.56 0-1.022 0.18667-1.386 0.56-0.364 0.364-0.546 0.83533-0.546 1.414 0 0.57867 0.182 1.05467 0.546 1.428z m8.58167-4.928l0 1.204c0.15867-0.43867 0.42933-0.77 0.812-0.994 0.38267-0.23333 0.82133-0.35 1.316-0.35l0 2.016c-0.55067-0.07467-1.04533 0.03733-1.484 0.336-0.42933 0.28933-0.644 0.77-0.644 1.442l0 3.346-1.806 0 0-7 1.806 0z m4.08023-0.84c-0.29867 0-0.56-0.10733-0.784-0.322-0.21467-0.224-0.322-0.48533-0.32199-0.784 0-0.29867 0.10733-0.56 0.32199-0.784 0.224-0.224 0.48533-0.336 0.784-0.336 0.308 0 0.56933 0.112 0.78401 0.336 0.224 0.224 0.336 0.48533 0.33599 0.784 0 0.29867-0.112 0.56-0.33599 0.784-0.21467 0.21467-0.476 0.322-0.78401 0.322z m0.91 7.84l-1.806 0 0-7 1.806 0 0 7z m7.61699-0.868c-0.70933 0.70933-1.58667 1.064-2.632 1.064-1.04533 0-1.92267-0.35467-2.632-1.064-0.70933-0.70933-1.064-1.58667-1.064-2.632 0-1.036 0.35467-1.90867 1.064-2.618 0.71867-0.71867 1.596-1.078 2.632-1.078 1.036 0 1.91333 0.35933 2.632 1.078 0.71867 0.71867 1.078 1.59133 1.078 2.618 0 1.036-0.35933 1.91333-1.078 2.632z m-3.99-1.246c0.364 0.364 0.81667 0.546 1.358 0.546 0.54133 0 0.994-0.182 1.358-0.546 0.364-0.364 0.546-0.826 0.546-1.386 0-0.56-0.182-1.022-0.546-1.386-0.364-0.364-0.81667-0.546-1.358-0.546-0.54133 0-0.994 0.182-1.358 0.546-0.35467 0.37333-0.532 0.83533-0.532 1.386 0 0.55067 0.17733 1.01267 0.532 1.386z"
+                fill="#ffffffff"
+              ></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div
+        style="background-color: #2A2A2E; box-sizing: border-box; flex-shrink: 0; height: 100%; position: relative; width: 1px; z-index: 9"
+      ></div>
+      <div
+        data-pencil-name="Flink_Logo_2020 (2) 1"
+        style="box-sizing: border-box; flex-shrink: 0; height: 17.71px; overflow: hidden; position: relative; width: 68.912px; z-index: 10"
+      >
+        <svg
+          data-pencil-name="path2"
+          viewBox="0.0000152587890625 -0.0000152587890625 834.6299896240234 214.49002075195312"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style="box-sizing: border-box; height: 17.709px; left: 0px; overflow: visible; position: absolute; top: 0px; width: 68.91px; z-index: 0"
+        >
+          <path
+            d="M776.19 0.01l-18.04999 47.73 58.44001 0 18.04998-47.73-58.44 0z m-456.78 58.74l-58.73999 155.73 58.43998 0 58.74002-155.73-58.44001 0z m-62.11001-58.74l-81.06999 214.47 58.44 0 81.08-214.47-58.45001 0z m288.51001 89.34c0-21.72-17.13001-33.35-41-33.35-18.97 0-36.41001 4.59-50.79001 18.97l5.81-16.21-56.59998 0-58.74002 155.73001 58.44 0 32.43-85.97001c6.11999-16.22 15.6-29.98 34.57-29.98 8.26001 0 12.24002 2.75 12.24002 9.18 0 3.06-0.92001 7.04-2.75 11.93l-35.79001 94.83 58.44001 0 33.03998-87.2c4.89001-12.54 10.70001-28.45 10.70001-37.93z m96.07 125.13l58.74 0-33.03998-80.76999 80.15997-74.96001-64.56 0-59.65997 56.29 43.44-115.04-58.42999 0-81.08002 214.47 58.44 0 27.22999-72.2 28.76 72.21z m-560.8-214.47l-81.08 214.47 64.25 0 27.84-73.43 86.58 0 19.27-51.4-86.58 0 14.07-37.02 93.93 0 19.89-52.62-158.17 0z"
+            fill="#ffffffff"
+          ></path>
+        </svg>
+      </div>
+      <div
+        data-pencil-name="Fondu gauche"
+        style="background-image: linear-gradient(90deg, #0B0B0D 50%, #0B0B0D00 100%); background-repeat: no-repeat; background-size: 100% 100%; box-sizing: border-box; height: 240px; left: 0px; position: absolute; top: -60px; width: 338px; z-index: 11"
+      ></div>
+      <div
+        data-pencil-name="Fondu droit"
+        style="background-image: linear-gradient(-90deg, #0B0B0D 50%, #0B0B0D00 100%); background-repeat: no-repeat; background-size: 100% 100%; box-sizing: border-box; height: 240px; left: 1132px; position: absolute; top: -60px; width: 308px; z-index: 12"
+      ></div>
+    </div>
+  </body>
+</html>

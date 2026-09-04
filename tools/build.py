@@ -1,0 +1,293 @@
+"""Rebuild index.html / pricing.html from the pen.dev "html-css" exports.
+
+Usage:
+    python3 tools/build.py [export-dir]
+
+Expects `css-home.html` and `css-tarifs.html` in the export directory
+(default: ./design-export). Produce them from KEYZZ TEST.pen with:
+
+    Export(["AOXrP"], "html-css", "design-export/css-home.html")    # home
+    Export(["ASriL"], "html-css", "design-export/css-tarifs.html")  # pricing
+"""
+
+import re, os, sys, base64, shutil, hashlib
+
+OUT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SRC = sys.argv[1] if len(sys.argv) > 1 else os.path.join(OUT, "design-export")
+ASSETS = os.path.join(OUT, "assets")
+IMAGE_SOURCE = os.path.expanduser("~/Downloads/images")
+os.makedirs(ASSETS, exist_ok=True)
+
+EXT = {"webp": "webp", "png": "png", "jpeg": "jpg", "jpg": "jpg", "gif": "gif", "svg+xml": "svg"}
+
+def extract_body(html):
+    i = html.find("<body")
+    i = html.index(">", i) + 1
+    j = html.rindex("</body>")
+    return html[i:j]
+
+def extract_images(html):
+    """Replace data: URIs with files in assets/, dedup by content hash."""
+    def repl(m):
+        mime, b64 = m.group(1), m.group(2)
+        raw = base64.b64decode(b64)
+        h = hashlib.sha1(raw).hexdigest()[:12]
+        name = "img-%s.%s" % (h, EXT.get(mime, "bin"))
+        path = os.path.join(ASSETS, name)
+        if not os.path.exists(path):
+            open(path, "wb").write(raw)
+        return "assets/" + name
+    return re.sub(r"data:image/([a-z+]+);base64,([A-Za-z0-9+/=]+)", repl, html)
+
+def copy_local_images(html):
+    """Copy images/*.png referenced by the export into assets/."""
+    def repl(m):
+        fname = m.group(1)
+        src = os.path.join(IMAGE_SOURCE, fname)
+        if os.path.exists(src):
+            shutil.copy2(src, os.path.join(ASSETS, fname))
+            return "assets/" + fname
+        return m.group(0)
+    return re.sub(r"images/([A-Za-z0-9._-]+\.(?:png|jpg|jpeg|webp))", repl, html)
+
+def find_close(html, start):
+    """Given index of '<div' opening tag, return index just past its matching </div>."""
+    i = html.index(">", start)
+    if html[i - 1] == "/":
+        return i + 1
+    depth, pos = 1, i + 1
+    while depth:
+        m = re.compile(r"</?div\b").search(html, pos)
+        if not m:
+            return None
+        if html[m.start() + 1] == "/":
+            depth -= 1
+            pos = html.index(">", m.start()) + 1
+        else:
+            k = html.index(">", m.start())
+            depth += 0 if html[k - 1] == "/" else 1
+            pos = k + 1
+    return pos
+
+def linkify(html, text, href, limit=None):
+    """Wrap each <div ...>TEXT</div> whose own text is exactly TEXT in an <a href>."""
+    out, pos, done = [], 0, 0
+    pat = re.compile(r"<div\b[^>]*>\s*" + re.escape(text) + r"\s*</div>")
+    while True:
+        if limit is not None and done >= limit:
+            break
+        m = pat.search(html, pos)
+        if not m:
+            break
+        out.append(html[pos:m.start()])
+        out.append('<a class="kz-link" href="%s">%s</a>' % (href, m.group(0)))
+        pos = m.end()
+        done += 1
+    out.append(html[pos:])
+    return "".join(out)
+
+def linkify_block(html, pencil_name, href, limit=1):
+    """Wrap the whole <div data-pencil-name="NAME"> ... </div> block in an <a href>."""
+    out, pos, done = [], 0, 0
+    needle = 'data-pencil-name="%s"' % pencil_name
+    while done < limit:
+        k = html.find(needle, pos)
+        if k < 0:
+            break
+        start = html.rindex("<div", 0, k)
+        end = find_close(html, start)
+        if end is None:
+            break
+        out.append(html[pos:start])
+        out.append('<a class="kz-link" href="%s">%s</a>' % (href, html[start:end]))
+        pos = end
+        done += 1
+    out.append(html[pos:])
+    return "".join(out)
+
+def swap_bandeau(body):
+    """Replace the exported "Bandeau logos" block with design-export/bandeau-logos.html.
+
+    The logo strip was redesigned outside the two page frames; its own export
+    is kept as the source of truth and grafted onto every page here.
+    """
+    path = os.path.join(SRC, "bandeau-logos.html")
+    if not os.path.exists(path):
+        return body
+    new = extract_body(open(path, encoding="utf-8").read())
+    k = new.find('data-pencil-name="Bandeau logos"')
+    start = new.rindex("<div", 0, k)
+    new = new[start:find_close(new, start)]
+    new = extract_images(new)
+    k = body.find('data-pencil-name="Bandeau logos"')
+    if k < 0:
+        return body
+    start = body.rindex("<div", 0, k)
+    end = find_close(body, start)
+    return body[:start] + new + body[end:]
+
+HEAD = """<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content="{desc}" />
+    <meta name="theme-color" content="#0B0B0D" />
+    <link rel="canonical" href="https://keyzz.io/{canonical}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="KEYZz Pro" />
+    <meta property="og:title" content="{title}" />
+    <meta property="og:description" content="{desc}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono%3Awght%40100..800&family=Space+Grotesk%3Awght%40300..700&family=Urbanist%3Awght%40100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/site.css" />
+    <link rel="stylesheet" href="assets/motion.css" />
+    <script>document.documentElement.classList.add("kz-js");</script>
+  </head>
+  <body>
+    <div id="stage">
+"""
+
+TAIL = """    </div>
+    <script src="assets/site.js"></script>
+    <script src="assets/glass.js"></script>
+    <script src="assets/motion.js"></script>
+  </body>
+</html>
+"""
+
+# Uniforms of the `keyzz-glass.glsl` shader fill, identical on all four active
+# "Film de verre" nodes in the .pen. The HTML export drops the shader and bakes
+# a still frame instead, so they are re-declared here for assets/glass.js.
+GLASS_ATTRS = (
+    'data-glass data-glass-intensity="0.55" data-glass-speed="0.18" '
+    'data-glass-bevel="10" data-glass-tint="#6E3BFF"'
+)
+
+CSS = """*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: #0b0b0d;
+}
+
+body {
+  margin: 0;
+  background-color: #0b0b0d;
+  color: #ffffff;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* The design is authored on a fixed 1440px canvas. Above 1440px the page is
+   centred and rendered 1:1; below it, the whole canvas scales down
+   proportionally so the layout never breaks. */
+#stage {
+  width: 1440px;
+  transform-origin: top left;
+}
+
+.kz-link {
+  color: inherit;
+  text-decoration: none;
+  display: contents;
+}
+
+[data-name="Lien Produit"],
+[data-name="FAQ"],
+[data-name="Marque"],
+[data-name="Bouton"],
+[data-name="Bouton primaire"],
+[data-name="Bouton secondaire"] {
+  cursor: pointer;
+}
+"""
+
+JS = """(function () {
+  var stage = document.getElementById('stage');
+  if (!stage) return;
+  var BASE = 1440;
+  var last = -1;
+
+  function fit() {
+    var w = document.documentElement.clientWidth;
+    if (w === last) return;
+    last = w;
+    var s = Math.min(1, w / BASE);
+    stage.style.transform = s === 1 ? '' : 'scale(' + s + ')';
+    stage.style.marginLeft = s === 1 ? Math.max(0, (w - BASE) / 2) + 'px' : '0px';
+    /* Only write the height when it actually moves: reassigning it on every
+       measure can nudge the scroll position while fonts and images settle. */
+    var h = stage.getBoundingClientRect().height + 'px';
+    if (h !== document.body.style.height) document.body.style.height = h;
+  }
+
+  function remeasure() {
+    last = -1;
+    fit();
+  }
+
+  fit();
+  window.addEventListener('resize', remeasure);
+  window.addEventListener('orientationchange', remeasure);
+  window.addEventListener('load', remeasure);
+  if (window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasure);
+})();
+"""
+
+PAGES = [
+    ("css-home.html", "index.html", "KEYZz Pro — Vos événements méritent mieux qu'un billet",
+     "KEYZz transforme chaque billet en carte de collection numérique : activez vos publics, "
+     "prolongez l'expérience et pilotez vos événements depuis une plateforme unique.", ""),
+    ("css-tarifs.html", "pricing.html", "Tarifs — KEYZz Pro",
+     "Des formules claires pour activer vos publics : découvrez les plans KEYZz Pro, "
+     "le pack Lancement et les offres Enterprise.", "pricing"),
+]
+
+for src, dst, title, desc, canonical in PAGES:
+    html = open(os.path.join(SRC, src), encoding="utf-8").read()
+    body = extract_body(html)
+    body = extract_images(body)
+    body = copy_local_images(body)
+    body = swap_bandeau(body)
+
+    # Cross-page navigation: header logo, footer logo, and the nav items only.
+    # The "Marque" blocks inside the card mockups must stay non-interactive.
+    body = linkify_block(body, "Marque", "index.html", limit=1)
+    foot = body.find('data-pencil-name="Pied de page"')
+    if foot > 0:
+        head_part, foot_part = body[:foot], body[foot:]
+        body = head_part + linkify_block(foot_part, "Marque", "index.html", limit=1)
+    body = linkify(body, "Tarifs", "pricing.html")
+    body = linkify(body, "Plateforme", "index.html")
+
+    # The exporter emits `content-box` on the sections that carry a partial
+    # border, which stacks their padding on top of the authored size and blows
+    # them out to 1560px wide. Border-box puts every section back on the exact
+    # dimensions of the .pen canvas.
+    body = body.replace("box-sizing: content-box", "box-sizing: border-box")
+
+    # Clean pencil metadata: keep a short, readable hook, drop the icon plumbing
+    body = body.replace("data-pencil-name=", "data-name=")
+
+    # Hand the frozen glass nodes to the WebGL replay in assets/glass.js
+    body = body.replace('data-name="Film de verre"', 'data-name="Film de verre" ' + GLASS_ATTRS)
+    body = re.sub(r'\s*data-icon-(?:name|set)="[^"]*"', "", body)
+
+    page = HEAD.format(title=title, desc=desc, canonical=canonical) + body + TAIL
+    open(os.path.join(OUT, dst), "w", encoding="utf-8").write(page)
+    print(dst, len(page) // 1024, "KB")
+
+open(os.path.join(ASSETS, "site.css"), "w", encoding="utf-8").write(CSS)
+open(os.path.join(ASSETS, "site.js"), "w", encoding="utf-8").write(JS)
+print("assets:", sorted(os.listdir(ASSETS)))

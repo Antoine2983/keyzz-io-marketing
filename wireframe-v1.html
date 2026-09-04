@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KEYZz — Access More</title>
+<meta name="description" content="KEYZz transforme vos activations en clés digitales désirables — à débloquer, collectionner et réactiver dans le temps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #F2EDE4;
+  --cream-soft: #ECE6DA;
+  --paper: #FAF7F1;
+  --ink: #0E0E0E;
+  --ink-soft: #1A1A1A;
+  --muted: #6B6253;
+  --muted-soft: #A39B8B;
+  --line: rgba(14, 14, 14, 0.10);
+  --line-soft: rgba(14, 14, 14, 0.06);
+  --accent: #E8FF3D;
+  --accent-deep: #C9E521;
+  --gold: #D4A437;
+  --on-dark: #F2EDE4;
+  --line-dark: rgba(242, 237, 228, 0.10);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'ss01', 'cv01';
+}
+
+.serif { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-style: italic; letter-spacing: -0.01em; }
+
+.container { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
+
+/* === NAV === */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(242, 237, 228, 0.78);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid var(--line-soft);
+}
+nav .container {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px;
+}
+.logo {
+  font-size: 22px; font-weight: 700; letter-spacing: -0.04em;
+  display: flex; align-items: baseline; gap: 8px;
+}
+.logo-mark {
+  display: inline-block; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--ink); position: relative; transform: translateY(3px);
+}
+.logo-mark::after {
+  content: ''; position: absolute; left: 50%; top: 50%;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--cream); transform: translate(-50%, -50%);
+}
+.logo .baseline {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.18em;
+  color: var(--muted); text-transform: uppercase;
+}
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a {
+  color: var(--ink); text-decoration: none; font-size: 13px;
+  font-weight: 500; opacity: 0.7; transition: opacity 0.2s;
+}
+.nav-links a:hover { opacity: 1; }
+.nav-cta { display: flex; gap: 8px; align-items: center; }
+@media (max-width: 860px) { .nav-links { display: none; } }
+
+/* === BUTTONS === */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 22px; border-radius: 999px; text-decoration: none;
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  transition: all 0.25s cubic-bezier(.2,.7,.3,1); border: 1px solid transparent;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--ink); color: var(--cream);
+}
+.btn-primary:hover { background: var(--ink-soft); transform: translateY(-1px); }
+.btn-primary .arrow {
+  display: inline-flex; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--accent); color: var(--ink); align-items: center;
+  justify-content: center; font-size: 11px;
+}
+.btn-secondary {
+  background: transparent; color: var(--ink);
+  border: 1px solid var(--line);
+}
+.btn-secondary:hover { background: rgba(14, 14, 14, 0.04); border-color: var(--ink); }
+.btn-ghost { background: transparent; color: var(--ink); padding: 10px 14px; font-weight: 500; }
+.btn-ghost:hover { opacity: 0.7; }
+.btn-light {
+  background: var(--cream); color: var(--ink);
+}
+.btn-light:hover { background: var(--paper); transform: translateY(-1px); }
+.btn-accent {
+  background: var(--accent); color: var(--ink); font-weight: 600;
+}
+.btn-accent:hover { background: var(--accent-deep); transform: translateY(-1px); }
+
+/* === DISPLAY TYPE === */
+.display {
+  font-size: clamp(54px, 8.4vw, 130px);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 600;
+}
+.display-md {
+  font-size: clamp(40px, 5.2vw, 76px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+.display-sm {
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+}
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--muted);
+}
+.eyebrow::before {
+  content: ''; display: inline-block; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--accent-deep);
+}
+
+/* === HERO === */
+.hero {
+  padding: 80px 0 120px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1fr; gap: 64px;
+  align-items: end;
+}
+.hero h1 {
+  font-size: clamp(56px, 9vw, 148px);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  font-weight: 600;
+  max-width: 1200px;
+}
+.hero h1 .em {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic; font-weight: 400; letter-spacing: -0.02em;
+}
+.hero-meta {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+  margin-top: 64px; padding-top: 32px;
+  border-top: 1px solid var(--line);
+  align-items: end;
+}
+.hero-sub {
+  font-size: 17px; color: var(--ink); opacity: 0.75; line-height: 1.55;
+  max-width: 440px;
+}
+.hero-ctas { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+
+.marquee-tag {
+  position: absolute; top: 20px; right: 32px;
+  display: inline-flex; gap: 8px; padding: 6px 14px;
+  border: 1px solid var(--line); border-radius: 999px;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); background: rgba(242, 237, 228, 0.7);
+}
+.marquee-tag::before {
+  content: ''; display: inline-block; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--accent-deep);
+  align-self: center;
+}
+
+@media (max-width: 860px) {
+  .hero { padding: 40px 0 64px; }
+  .hero-meta { grid-template-columns: 1fr; gap: 24px; margin-top: 40px; }
+  .hero-ctas { justify-content: flex-start; }
+  .marquee-tag { position: relative; top: 0; right: 0; margin-bottom: 32px; }
+}
+
+/* === KEY CARDS (hero visual) === */
+.keys-strip {
+  margin-top: 80px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+}
+.key-card {
+  aspect-ratio: 3/4; border-radius: 18px;
+  background: var(--ink); color: var(--on-dark);
+  padding: 22px; display: flex; flex-direction: column;
+  justify-content: space-between; position: relative; overflow: hidden;
+  transition: transform 0.4s cubic-bezier(.2,.7,.3,1);
+}
+.key-card:hover { transform: translateY(-6px) rotate(-1deg); }
+.key-card.k2 { background: var(--accent); color: var(--ink); }
+.key-card.k3 { background: var(--paper); color: var(--ink); border: 1px solid var(--line); }
+.key-card.k4 {
+  background: linear-gradient(155deg, #1A1A1A 0%, #2A2A2A 60%, #1A1A1A 100%);
+  color: var(--on-dark);
+}
+.key-card-top {
+  display: flex; justify-content: space-between;
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  opacity: 0.7;
+}
+.key-card-num {
+  font-family: 'Instrument Serif', serif;
+  font-size: 64px; line-height: 1; letter-spacing: -0.03em;
+  font-style: italic;
+}
+.key-card-label {
+  font-size: 12px; letter-spacing: 0.05em;
+  display: flex; justify-content: space-between; align-items: end;
+}
+.key-card-label small {
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.6;
+}
+@media (max-width: 860px) {
+  .keys-strip { grid-template-columns: repeat(2, 1fr); margin-top: 48px; }
+}
+
+/* === SECTIONS === */
+section { padding: 140px 0; position: relative; }
+.section-dark { background: var(--ink); color: var(--on-dark); }
+.section-dark .eyebrow { color: var(--muted-soft); }
+.section-dark .eyebrow::before { background: var(--accent); }
+.section-paper { background: var(--paper); }
+
+.section-head {
+  display: grid; grid-template-columns: 1fr 1.2fr; gap: 64px;
+  margin-bottom: 96px; align-items: end;
+}
+.section-head h2 { font-weight: 600; }
+.section-head p {
+  font-size: 16px; color: var(--ink); opacity: 0.7; line-height: 1.6;
+  max-width: 480px;
+}
+.section-dark .section-head p { color: var(--on-dark); opacity: 0.65; }
+
+@media (max-width: 860px) {
+  section { padding: 80px 0; }
+  .section-head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 56px; }
+}
+
+/* === PROBLEM === */
+.problem-list {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  margin-top: 56px;
+}
+.problem-card {
+  padding: 36px 28px 32px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--paper);
+  display: flex; flex-direction: column; gap: 16px;
+  min-height: 240px;
+}
+.problem-num {
+  font-family: 'Instrument Serif', serif;
+  font-size: 40px; line-height: 1; font-style: italic;
+  color: var(--muted); letter-spacing: -0.02em;
+}
+.problem-card h3 {
+  font-size: 19px; font-weight: 600; letter-spacing: -0.015em;
+}
+.problem-card p { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+.problem-outro {
+  margin-top: 80px; padding: 48px;
+  border-radius: 24px; background: var(--ink); color: var(--on-dark);
+  display: flex; align-items: center; justify-content: space-between; gap: 40px;
+}
+.problem-outro p {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(28px, 3.6vw, 48px); line-height: 1.05;
+  letter-spacing: -0.02em; font-style: italic; max-width: 720px;
+}
+.problem-outro .pill {
+  display: inline-flex; padding: 10px 18px; border-radius: 999px;
+  background: var(--accent); color: var(--ink);
+  font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; white-space: nowrap;
+}
+
+@media (max-width: 860px) {
+  .problem-list { grid-template-columns: 1fr; }
+  .problem-outro { flex-direction: column; padding: 32px; align-items: flex-start; }
+}
+
+/* === PROMESSE === */
+.promesse-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 24px; overflow: hidden;
+}
+.promesse-cell {
+  background: var(--cream); padding: 40px 32px;
+  display: flex; flex-direction: column; gap: 14px;
+  min-height: 240px;
+}
+.section-dark .promesse-grid { background: var(--line-dark); border-color: var(--line-dark); }
+.section-dark .promesse-cell { background: var(--ink); }
+
+.promesse-cell .icon {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--accent); color: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: 18px; letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.promesse-cell h3 {
+  font-size: 18px; font-weight: 600; letter-spacing: -0.01em;
+}
+.section-dark .promesse-cell h3 { color: var(--on-dark); }
+.promesse-cell p {
+  font-size: 14px; color: var(--muted); line-height: 1.55;
+}
+.section-dark .promesse-cell p { color: var(--muted-soft); }
+
+.promesse-outro {
+  margin-top: 80px; text-align: center;
+}
+.promesse-outro .quote {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(28px, 4vw, 56px); line-height: 1.05;
+  letter-spacing: -0.025em; font-style: italic; max-width: 920px;
+  margin: 0 auto;
+}
+.promesse-outro .quote .hl {
+  font-family: 'Inter'; font-style: normal; font-weight: 600;
+  background: var(--accent); padding: 0 8px; border-radius: 4px;
+}
+
+@media (max-width: 860px) {
+  .promesse-grid { grid-template-columns: 1fr; }
+}
+
+/* === GAMIFICATION === */
+.gam-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+}
+.gam-card {
+  aspect-ratio: 1; border-radius: 20px;
+  padding: 28px 24px; display: flex; flex-direction: column;
+  justify-content: space-between; position: relative; overflow: hidden;
+  background: var(--paper); border: 1px solid var(--line);
+  transition: transform 0.3s;
+}
+.gam-card:hover { transform: translateY(-4px); }
+.gam-card.alt { background: var(--accent); border-color: var(--accent-deep); }
+.gam-card.dark { background: var(--ink); color: var(--on-dark); border-color: var(--ink); }
+.gam-tag {
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  opacity: 0.6;
+}
+.gam-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(28px, 3.2vw, 44px); line-height: 1; font-style: italic;
+  letter-spacing: -0.025em;
+}
+.gam-card p { font-size: 13px; line-height: 1.45; opacity: 0.75; }
+
+.gam-banner {
+  margin-top: 56px; padding: 32px 40px;
+  border: 1px dashed var(--ink); border-radius: 999px;
+  display: flex; gap: 24px; justify-content: center; align-items: center; flex-wrap: wrap;
+  font-size: clamp(16px, 1.6vw, 22px); font-weight: 500; letter-spacing: -0.01em;
+}
+.gam-banner span { display: inline-flex; align-items: center; gap: 24px; }
+.gam-banner .sep {
+  width: 5px; height: 5px; border-radius: 50%; background: var(--ink);
+}
+
+@media (max-width: 860px) {
+  .gam-grid { grid-template-columns: repeat(2, 1fr); }
+  .gam-banner { padding: 24px; border-radius: 24px; flex-direction: column; gap: 12px; }
+  .gam-banner .sep { display: none; }
+}
+
+/* === HOW IT WORKS === */
+.steps-rail {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  position: relative;
+}
+.step {
+  padding: 36px 32px; border-radius: 24px;
+  background: rgba(242, 237, 228, 0.06);
+  border: 1px solid var(--line-dark);
+  display: flex; flex-direction: column; gap: 20px;
+  min-height: 360px; position: relative;
+}
+.step:nth-child(2) { background: var(--accent); color: var(--ink); border-color: var(--accent-deep); }
+.step-num-block {
+  display: flex; justify-content: space-between; align-items: start;
+  font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  opacity: 0.7;
+}
+.step-big {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: clamp(72px, 8vw, 120px); line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+.step h3 {
+  font-size: 22px; font-weight: 600; letter-spacing: -0.02em;
+}
+.step p { font-size: 14px; opacity: 0.7; line-height: 1.55; flex: 1; }
+
+.steps-outro {
+  margin-top: 64px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  padding: 32px 40px; border-radius: 24px;
+  background: rgba(242, 237, 228, 0.06); border: 1px solid var(--line-dark);
+}
+.steps-outro div { display: flex; flex-direction: column; gap: 6px; }
+.steps-outro small {
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  opacity: 0.5;
+}
+.steps-outro p { font-size: 18px; font-weight: 500; letter-spacing: -0.01em; }
+
+@media (max-width: 860px) {
+  .steps-rail { grid-template-columns: 1fr; }
+  .steps-outro { grid-template-columns: 1fr; }
+}
+
+/* === ECOSYSTEM === */
+.eco-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.eco-card {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: 24px; padding: 36px; min-height: 480px;
+  display: flex; flex-direction: column; gap: 24px;
+}
+.eco-card.mid {
+  background: var(--ink); color: var(--on-dark); border-color: var(--ink);
+}
+.eco-name {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: 32px; letter-spacing: -0.02em;
+}
+.eco-tagline {
+  font-size: 14px; opacity: 0.7; line-height: 1.55;
+}
+.eco-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); }
+.eco-card.mid .eco-list { border-color: var(--line-dark); }
+.eco-list li {
+  font-size: 14px; opacity: 0.85;
+  display: flex; align-items: start; gap: 12px;
+}
+.eco-list li::before {
+  content: '↗'; color: var(--accent-deep); font-size: 14px;
+}
+.eco-card.mid .eco-list li::before { color: var(--accent); }
+
+@media (max-width: 860px) {
+  .eco-grid { grid-template-columns: 1fr; }
+  .eco-card { min-height: auto; }
+}
+
+/* === EFFET CUMULATIF === */
+.cumul-grid {
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px;
+  align-items: start;
+}
+.cumul-list {
+  display: flex; flex-direction: column;
+}
+.cumul-row {
+  padding: 28px 0;
+  border-top: 1px solid var(--line);
+  display: grid; grid-template-columns: 28px 1fr; gap: 24px;
+  align-items: start;
+}
+.cumul-row:last-child { border-bottom: 1px solid var(--line); }
+.cumul-row-num {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  color: var(--muted); font-size: 18px;
+}
+.cumul-row h3 {
+  font-size: 19px; font-weight: 500; letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+.cumul-row p { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+.cumul-quote {
+  position: sticky; top: 96px;
+  padding: 40px; border-radius: 24px;
+  background: var(--ink); color: var(--on-dark);
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: clamp(28px, 2.8vw, 38px); line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.cumul-quote .hl {
+  font-family: 'Inter'; font-style: normal; font-weight: 600;
+  background: var(--accent); color: var(--ink);
+  padding: 0 8px; border-radius: 4px;
+}
+
+@media (max-width: 860px) {
+  .cumul-grid { grid-template-columns: 1fr; }
+  .cumul-quote { position: relative; top: 0; }
+}
+
+/* === DIFFERENTIATION === */
+.diff-table {
+  border-top: 1px solid var(--line-dark);
+}
+.diff-row {
+  padding: 36px 0;
+  border-bottom: 1px solid var(--line-dark);
+  display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 48px;
+  align-items: center;
+  transition: padding 0.3s;
+}
+.diff-row:hover { padding-left: 16px; padding-right: 16px; }
+.diff-vs-tag {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: 36px; letter-spacing: -0.02em;
+}
+.diff-vs-tag small {
+  display: block; font-family: 'Inter'; font-style: normal;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted-soft); margin-bottom: 6px; font-weight: 500;
+}
+.diff-row p {
+  font-size: 16px; opacity: 0.85; line-height: 1.55;
+}
+.diff-row .badge {
+  justify-self: end;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); padding: 6px 14px;
+  border: 1px solid var(--accent); border-radius: 999px;
+}
+
+@media (max-width: 860px) {
+  .diff-row { grid-template-columns: 1fr; gap: 16px; padding: 28px 0; }
+  .diff-row .badge { justify-self: start; }
+}
+
+/* === DATA / RGPD === */
+.rgpd-block {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+  align-items: start;
+}
+.rgpd-list { display: flex; flex-direction: column; gap: 0; }
+.rgpd-item {
+  padding: 28px 0; border-bottom: 1px solid var(--line);
+  display: grid; grid-template-columns: 80px 1fr; gap: 24px;
+  align-items: start;
+}
+.rgpd-item:first-child { border-top: 1px solid var(--line); }
+.rgpd-key {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--accent); color: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: 28px;
+}
+.rgpd-item h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 6px; }
+.rgpd-item p { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+.rgpd-pitch h2 { margin-bottom: 24px; }
+.rgpd-pitch p { font-size: 16px; line-height: 1.6; color: var(--muted); margin-bottom: 24px; }
+.rgpd-badge {
+  display: inline-flex; gap: 10px; align-items: center;
+  padding: 10px 18px; border-radius: 999px;
+  border: 1px solid var(--ink); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.rgpd-badge::before {
+  content: ''; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent-deep);
+}
+
+@media (max-width: 860px) {
+  .rgpd-block { grid-template-columns: 1fr; gap: 48px; }
+}
+
+/* === SECTEURS === */
+.sect-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+}
+.sect-card {
+  border: 1px solid var(--line); border-radius: 20px;
+  padding: 28px 22px; min-height: 320px;
+  background: var(--paper); display: flex; flex-direction: column; gap: 16px;
+  transition: all 0.3s;
+}
+.sect-card:hover {
+  background: var(--ink); color: var(--on-dark); border-color: var(--ink);
+  transform: translateY(-4px);
+}
+.sect-card:hover h3 { color: var(--accent); }
+.sect-tag {
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--muted);
+}
+.sect-card:hover .sect-tag { color: var(--muted-soft); }
+.sect-card h3 {
+  font-size: 18px; font-weight: 600; letter-spacing: -0.01em;
+  transition: color 0.3s;
+}
+.sect-card p { font-size: 13px; opacity: 0.75; line-height: 1.5; }
+
+@media (max-width: 1024px) {
+  .sect-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .sect-grid { grid-template-columns: 1fr; }
+}
+
+/* === CTA FINAL === */
+.final-cta {
+  padding: 80px 64px; border-radius: 32px;
+  background: var(--ink); color: var(--on-dark);
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px;
+  align-items: center; position: relative; overflow: hidden;
+}
+.final-cta::before {
+  content: ''; position: absolute; bottom: -120px; right: -120px;
+  width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 255, 61, 0.18), transparent 70%);
+  pointer-events: none;
+}
+.final-cta h2 {
+  font-size: clamp(40px, 5vw, 72px); line-height: 0.98;
+  letter-spacing: -0.035em; font-weight: 600; margin-bottom: 24px;
+}
+.final-cta h2 .em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; }
+.final-cta p {
+  font-size: 16px; line-height: 1.6; opacity: 0.7;
+  max-width: 480px; margin-bottom: 40px;
+}
+.final-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.final-side {
+  display: flex; flex-direction: column; gap: 24px;
+  position: relative; z-index: 1;
+}
+.final-key {
+  aspect-ratio: 3/4; border-radius: 24px;
+  background: var(--accent); color: var(--ink);
+  padding: 32px; display: flex; flex-direction: column;
+  justify-content: space-between; transform: rotate(-2deg);
+}
+.final-key-top {
+  display: flex; justify-content: space-between;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.final-key-name {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: 56px; line-height: 0.95; letter-spacing: -0.03em;
+}
+.final-key-bottom {
+  font-size: 12px; letter-spacing: 0.1em; opacity: 0.7;
+}
+
+@media (max-width: 860px) {
+  .final-cta { padding: 48px 28px; grid-template-columns: 1fr; gap: 48px; }
+}
+
+/* === FOOTER === */
+footer {
+  background: var(--cream); padding: 100px 0 32px;
+  border-top: 1px solid var(--line);
+}
+.footer-display {
+  font-size: clamp(80px, 18vw, 280px);
+  line-height: 0.85; letter-spacing: -0.06em; font-weight: 600;
+  display: flex; align-items: baseline; gap: 24px;
+  margin-bottom: 64px;
+}
+.footer-display .em {
+  font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400;
+}
+.footer-display .dot {
+  width: clamp(12px, 2vw, 24px); height: clamp(12px, 2vw, 24px);
+  border-radius: 50%; background: var(--accent-deep);
+  display: inline-block; transform: translateY(-12px);
+}
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+  padding-top: 48px; border-top: 1px solid var(--line);
+}
+.footer-brand p {
+  font-size: 14px; color: var(--muted); margin-top: 16px;
+  max-width: 320px; line-height: 1.6;
+}
+.footer-col h4 {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase; margin-bottom: 20px;
+  color: var(--muted);
+}
+.footer-col ul { list-style: none; }
+.footer-col li { padding: 6px 0; }
+.footer-col a {
+  color: var(--ink); font-size: 14px; text-decoration: none;
+  transition: opacity 0.2s;
+}
+.footer-col a:hover { opacity: 0.6; }
+.footer-bottom {
+  margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: var(--muted);
+}
+@media (max-width: 860px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  footer { padding: 64px 0 32px; }
+}
+
+/* === MARQUEE === */
+.marquee {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden; padding: 24px 0;
+  background: var(--paper);
+}
+.marquee-track {
+  display: flex; gap: 64px; white-space: nowrap;
+  animation: scroll 30s linear infinite;
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: clamp(28px, 4vw, 56px); letter-spacing: -0.02em;
+}
+.marquee-track span { display: inline-flex; align-items: center; gap: 64px; }
+.marquee-track .sep {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--accent-deep); align-self: center;
+}
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container">
+    <div class="logo">
+      <span class="logo-mark"></span>
+      <span>KEYZz</span>
+      <span class="baseline">Access More</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#promesse">Promesse</a></li>
+      <li><a href="#how">Comment ça marche</a></li>
+      <li><a href="#ecosystem">Écosystème</a></li>
+      <li><a href="#sectors">Secteurs</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-ghost">Login</a>
+      <a href="#contact" class="btn btn-primary">
+        Réserver une démo
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="marquee-tag">v1 · Beta accès anticipé</div>
+    <div class="hero-grid">
+      <h1>
+        Offrez plus <br>
+        à votre public. <br>
+        <span class="em">Obtenez plus</span> <br>
+        qu'un simple contact.
+      </h1>
+    </div>
+    <div class="hero-meta">
+      <p class="hero-sub">
+        Avec KEYZz, chaque événement, activation ou lancement devient une expérience à débloquer, à collectionner et à réactiver dans le temps. Une clé digitale désirable, un lien direct, mesurable et activable.
+      </p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-primary">
+          Créer une première KEYZz
+          <span class="arrow">→</span>
+        </a>
+        <a href="#how" class="btn btn-secondary">Voir comment ça marche</a>
+      </div>
+    </div>
+
+    <!-- HERO KEY CARDS -->
+    <div class="keys-strip">
+      <div class="key-card k1">
+        <div class="key-card-top">
+          <span>KEYZz · 001</span>
+          <span>◐</span>
+        </div>
+        <div class="key-card-num">01</div>
+        <div class="key-card-label">
+          <span>Festival<br><small>Édition 2026</small></span>
+          <small>VIP</small>
+        </div>
+      </div>
+      <div class="key-card k2">
+        <div class="key-card-top">
+          <span>KEYZz · 002</span>
+          <span>★</span>
+        </div>
+        <div class="key-card-num">02</div>
+        <div class="key-card-label">
+          <span>Drop limité<br><small>500 exemplaires</small></span>
+          <small>RARE</small>
+        </div>
+      </div>
+      <div class="key-card k3">
+        <div class="key-card-top">
+          <span>KEYZz · 003</span>
+          <span>♛</span>
+        </div>
+        <div class="key-card-num">03</div>
+        <div class="key-card-label">
+          <span>Backstage<br><small>Tournée FW26</small></span>
+          <small>ACCESS</small>
+        </div>
+      </div>
+      <div class="key-card k4">
+        <div class="key-card-top">
+          <span>KEYZz · 004</span>
+          <span>◆</span>
+        </div>
+        <div class="key-card-num">04</div>
+        <div class="key-card-label">
+          <span>Membre fondateur<br><small>Cercle privé</small></span>
+          <small>UNIQUE</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Déverrouiller <span class="sep"></span> Collectionner <span class="sep"></span> Profiter <span class="sep"></span> Revenir <span class="sep"></span> Déverrouiller <span class="sep"></span> Collectionner <span class="sep"></span> Profiter <span class="sep"></span> Revenir <span class="sep"></span></span>
+    <span>Déverrouiller <span class="sep"></span> Collectionner <span class="sep"></span> Profiter <span class="sep"></span> Revenir <span class="sep"></span> Déverrouiller <span class="sep"></span> Collectionner <span class="sep"></span> Profiter <span class="sep"></span> Revenir <span class="sep"></span></span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Le constat</span>
+        <h2 class="display-md" style="margin-top: 24px;">
+          Les marques créent<br>des moments forts.<br>
+          <span class="serif">Mais trop souvent,</span><br>
+          <span class="serif">le lien s'arrête là.</span>
+        </h2>
+      </div>
+      <p>
+        Concerts, festivals, lancements, pop-ups, salons, défilés, événements sportifs. Les publics vivent des expériences fortes, mais repartent souvent sans lien, et les marques sans relation directe réellement exploitable.
+      </p>
+    </div>
+
+    <div class="problem-list">
+      <div class="problem-card">
+        <div class="problem-num">01</div>
+        <h3>Le public repart sans souvenir activable</h3>
+        <p>Il a vécu un moment, mais rien ne prolonge vraiment l'expérience.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-num">02</div>
+        <h3>La marque perd le lien</h3>
+        <p>Pas toujours d'email, pas toujours d'opt-in, pas toujours de comportement exploitable.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-num">03</div>
+        <h3>La valeur disparaît après l'événement</h3>
+        <p>Difficile de réactiver simplement, de mesurer précisément ou de transformer l'engagement en revenu.</p>
+      </div>
+    </div>
+
+    <div class="problem-outro">
+      <p>KEYZz prolonge l'expérience en actif relationnel.</p>
+      <span class="pill">La solution</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROMESSE -->
+<section id="promesse" class="section-dark">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">À quoi ça sert</span>
+        <h2 class="display-md" style="margin-top: 24px;">
+          La promesse <span class="serif">des</span><br>
+          KEYZz, en six gestes.
+        </h2>
+      </div>
+      <p>
+        Une KEYZz n'est pas un formulaire de plus. C'est un actif relationnel : un objet de désir côté public, un canal direct côté marque, et une nouvelle source de data, de revenus et de privilège.
+      </p>
+    </div>
+
+    <div class="promesse-grid">
+      <div class="promesse-cell">
+        <div class="icon">a</div>
+        <h3>Créer du lien direct</h3>
+        <p>Identifiez et animez votre cœur de communauté sans dépendre uniquement des algorithmes, plateformes ou portée payante.</p>
+      </div>
+      <div class="promesse-cell">
+        <div class="icon">b</div>
+        <h3>Donner envie de participer</h3>
+        <p>Une KEYZz se débloque, se garde, se collectionne. Elle transforme une interaction en geste volontaire. C'est un objet de désir.</p>
+      </div>
+      <div class="promesse-cell">
+        <div class="icon">c</div>
+        <h3>Activer un nouveau canal</h3>
+        <p>Avant, pendant, après vos opérations : un canal direct pour révéler du contenu, offrir des privilèges et réactiver votre public.</p>
+      </div>
+      <div class="promesse-cell">
+        <div class="icon">d</div>
+        <h3>Générer de nouveaux revenus</h3>
+        <p>Accès exclusifs, offres partenaires, contenus premium, vouchers, merchandising digital, expériences VIP : chaque KEYZz devient un point de valeur.</p>
+      </div>
+      <div class="promesse-cell">
+        <div class="icon">e</div>
+        <h3>Exploiter une nouvelle data</h3>
+        <p>Une donnée opt-in, contextualisée, liée à une interaction réelle et exploitable dans le temps.</p>
+      </div>
+      <div class="promesse-cell">
+        <div class="icon">f</div>
+        <h3>Créer un sentiment de privilège</h3>
+        <p>Le public ne reçoit pas un message : il obtient une clé. Quelque chose à garder, à montrer, à débloquer, à collectionner.</p>
+      </div>
+    </div>
+
+    <div class="promesse-outro">
+      <p class="quote">
+        Avec KEYZz, le lien ne repose plus sur une audience louée. Il passe par un <span class="hl">trousseau de clés</span> détenu par votre public.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- GAMIFICATION -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Gamification</span>
+        <h2 class="display-md" style="margin-top: 24px;">
+          Donnez plus de valeur<br>
+          <span class="serif">à chaque activation.</span>
+        </h2>
+      </div>
+      <p>
+        Une KEYZz peut devenir un trophée, une preuve de présence, un accès privilégié ou une récompense à débloquer. À vous d'imaginer la mécanique.
+      </p>
+    </div>
+
+    <div class="gam-grid">
+      <div class="gam-card">
+        <span class="gam-tag">01 · Cadeaux</span>
+        <div class="gam-title">Cadeaux</div>
+        <p>Récompensez une présence, une participation, un achat, un vote, une visite ou une interaction.</p>
+      </div>
+      <div class="gam-card alt">
+        <span class="gam-tag">02 · Collections</span>
+        <div class="gam-title">Collections</div>
+        <p>Créez des séries limitées liées à vos événements, saisons, artistes, lieux ou campagnes.</p>
+      </div>
+      <div class="gam-card dark">
+        <span class="gam-tag">03 · Déblocages</span>
+        <div class="gam-title">Déblocages</div>
+        <p>Révélez des contenus, avantages ou expériences selon le moment, le profil ou le niveau d'engagement.</p>
+      </div>
+      <div class="gam-card">
+        <span class="gam-tag">04 · Privilèges</span>
+        <div class="gam-title">Privilèges</div>
+        <p>Accès VIP, codes, contenus inédits, early access, invitations, offres partenaires. Offrez plus à ceux qui jouent.</p>
+      </div>
+    </div>
+
+    <div class="gam-banner">
+      <span>Débloquer <span class="sep"></span> Collectionner <span class="sep"></span> Profiter <span class="sep"></span> Revenir</span>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="section-dark">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Comment ça marche</span>
+        <h2 class="display-md" style="margin-top: 24px;">
+          De l'expérience <span class="serif">au lien</span><br>
+          direct, en trois étapes.
+        </h2>
+      </div>
+      <p>
+        Un geste simple côté public, une donnée qualifiée côté marque. Pas d'app à installer, pas de wallet à configurer. Juste un smartphone et une clé.
+      </p>
+    </div>
+
+    <div class="steps-rail">
+      <div class="step">
+        <div class="step-num-block">
+          <span>Étape 01</span>
+          <span>↗</span>
+        </div>
+        <div class="step-big">01</div>
+        <h3>Vous créez votre KEYZz</h3>
+        <p>Choisissez le visuel, le contenu, les privilèges, les règles de déblocage et le niveau de rareté.</p>
+      </div>
+      <div class="step">
+        <div class="step-num-block">
+          <span>Étape 02</span>
+          <span>↗</span>
+        </div>
+        <div class="step-big">02</div>
+        <h3>Votre public la débloque</h3>
+        <p>Par QR code, lien, NFC ou campagne dédiée. L'accès est simple, sans friction, depuis le smartphone.</p>
+      </div>
+      <div class="step">
+        <div class="step-num-block">
+          <span>Étape 03</span>
+          <span>↗</span>
+        </div>
+        <div class="step-big">03</div>
+        <h3>Vous activez la relation</h3>
+        <p>Suivez les claims, opt-ins, usages, revisites et conversions. Réactivez votre audience dans le temps.</p>
+      </div>
+    </div>
+
+    <div class="steps-outro">
+      <div>
+        <small>Côté public</small>
+        <p>Un geste simple, presque magique.</p>
+      </div>
+      <div>
+        <small>Côté marque</small>
+        <p>Une donnée qualifiée, immédiatement exploitable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ECOSYSTEM -->
+<section id="ecosystem">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Écosystème</span>
+        <h2 class="display-md" style="margin-top: 24px;">
+          Un écosystème <span class="serif">pour créer,</span><br>
+          distribuer et activer.
+        </h2>
+      </div>
+      <p>
+        Trois pièces, un seul système. De la création de la clé à la réactivation de l'audience, en passant par l'objet désirable que votre public garde près de lui.
+      </p>
+    </div>
+
+    <div class="eco-grid">
+      <div class="eco-card">
+        <span class="eyebrow">Plateforme marque</span>
+        <div class="eco-name">KEYZz<span style="color: var(--muted);">.io</span></div>
+        <p class="eco-tagline">La plateforme qui permet aux marques de créer, personnaliser, distribuer et mesurer leurs KEYZz.</p>
+        <ul class="eco-list">
+          <li>Créer ses clés</li>
+          <li>Définir contenus et privilèges</li>
+          <li>Suivre les performances</li>
+          <li>Exporter la donnée</li>
+          <li>Réactiver son audience</li>
+        </ul>
+      </div>
+      <div class="eco-card mid">
+        <span class="eyebrow">L'objet</span>
+        <div class="eco-name">La KEYZz</div>
+        <p class="eco-tagline">Une clé digitale collectionnable qui donne accès à des contenus, avantages ou expériences.</p>
+        <ul class="eco-list">
+          <li>Offerte</li>
+          <li>Vendue</li>
+          <li>Limitée</li>
+          <li>Évolutive</li>
+          <li>Liée à un événement ou une communauté</li>
+        </ul>
+      </div>
+      <div class="eco-card">
+        <span class="eyebrow">App grand public</span>
+        <div class="eco-name">KEYZz<span style="color: var(--muted);">.app</span></div>
+        <p class="eco-tagline">L'espace où le public retrouve ses clés, ses contenus, ses avantages et ses collections.</p>
+        <ul class="eco-list">
+          <li>Scanner ou recevoir une KEYZz</li>
+          <li>La débloquer</li>
+          <li>Accéder à ses privilèges</li>
+          <li>Collectionner ses clés</li>
+          <li>Revenir pour de nouveaux contenus</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EFFET CUMULATIF -->
+<section class="section-paper">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Effet cumulatif</span>
+        <h2 class="display-md" style="margin-top: 24px;">
+          Plus vous activez,<br>
+          <span class="serif">plus la relation</span><br>
+          prend de la valeur.
+        </h2>
+      </div>
+      <p>
+        Chaque KEYZz distribuée enrichit votre écosystème. Vous identifiez mieux votre public, comprenez ce qui l'engage, mesurez ce qui fonctionne et créez de nouvelles occasions de revenir vers lui.
+      </p>
+    </div>
+
+    <div class="cumul-grid">
+      <div class="cumul-list">
+        <div class="cumul-row">
+          <div class="cumul-row-num">i</div>
+          <div>
+            <h3>Identifier vos publics les plus engagés</h3>
+            <p>À partir d'interactions réelles, pas seulement d'impressions ou de vues.</p>
+          </div>
+        </div>
+        <div class="cumul-row">
+          <div class="cumul-row-num">ii</div>
+          <div>
+            <h3>Construire une base propriétaire</h3>
+            <p>Des opt-ins qualifiés et réutilisables dans vos outils CRM.</p>
+          </div>
+        </div>
+        <div class="cumul-row">
+          <div class="cumul-row-num">iii</div>
+          <div>
+            <h3>Mesurer l'engagement réel</h3>
+            <p>Claims, scans, clics, temps passé, revisites, conversions, usages des privilèges.</p>
+          </div>
+        </div>
+        <div class="cumul-row">
+          <div class="cumul-row-num">iv</div>
+          <div>
+            <h3>Réactiver dans le temps</h3>
+            <p>Nouveaux contenus, avantages, invitations, offres, expériences ou campagnes ciblées.</p>
+          </div>
+        </div>
+        <div class="cumul-row">
+          <div class="cumul-row-num">v</div>
+          <div>
+            <h3>Créer de nouveaux revenus</h3>
+            <p>Vente de KEYZz, accès premium, offres partenaires, vouchers, upsell, merchandising digital.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cumul-quote">
+        Une KEYZz n'est pas une <span class="hl">campagne</span>. C'est un point de départ relationnel.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFERENTIATION -->
+<section class="section-dark">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Différenciation</span>
+        <h2 class="display-md" style="margin-top: 24px;">
+          Pourquoi une KEYZz <span class="serif">plutôt</span><br>
+          qu'autre chose ?
+        </h2>
+      </div>
+      <p>
+        Parce qu'une KEYZz ne demande pas seulement une donnée. Elle donne une raison de s'engager. Comparée aux outils habituels, voici ce qui change.
+      </p>
+    </div>
+
+    <div class="diff-table">
+      <div class="diff-row">
+        <div class="diff-vs-tag">
+          <small>vs</small>Un formulaire
+        </div>
+        <p>Un formulaire collecte une information. Une KEYZz crée un échange : le public reçoit quelque chose de concret en retour.</p>
+        <span class="badge">Échange</span>
+      </div>
+      <div class="diff-row">
+        <div class="diff-vs-tag">
+          <small>vs</small>Une newsletter
+        </div>
+        <p>Une newsletter permet de parler à une audience. Une KEYZz permet d'identifier une intention, un comportement et un niveau d'engagement.</p>
+        <span class="badge">Comportement</span>
+      </div>
+      <div class="diff-row">
+        <div class="diff-vs-tag">
+          <small>vs</small>Une app dédiée
+        </div>
+        <p>Une app demande un effort d'installation. Une KEYZz fonctionne via un accès simple, pensé pour une activation rapide depuis le smartphone.</p>
+        <span class="badge">Sans friction</span>
+      </div>
+      <div class="diff-row">
+        <div class="diff-vs-tag">
+          <small>vs</small>Un NFT spéculatif
+        </div>
+        <p>Une KEYZz n'est pas pensée comme un actif spéculatif. Elle est pensée comme une clé d'accès, de privilège et de relation.</p>
+        <span class="badge">Accès</span>
+      </div>
+      <div class="diff-row">
+        <div class="diff-vs-tag">
+          <small>vs</small>Un goodie jetable
+        </div>
+        <p>Un objet physique se perd ou finit oublié. Une KEYZz reste accessible, réactivable et mesurable dans le temps.</p>
+        <span class="badge">Réactivable</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATA / RGPD -->
+<section>
+  <div class="container">
+    <div class="rgpd-block">
+      <div class="rgpd-pitch">
+        <span class="eyebrow">Data &amp; conformité</span>
+        <h2 class="display-md" style="margin-top: 24px;">
+          Une relation <span class="serif">propriétaire,</span><br>
+          dans un cadre maîtrisé.
+        </h2>
+        <p>
+          KEYZz est conçu pour permettre aux marques de collecter une donnée opt-in, contextualisée et exploitable, tout en gardant la maîtrise de leur relation avec leur public.
+        </p>
+        <span class="rgpd-badge">Compatible RGPD</span>
+      </div>
+      <div class="rgpd-list">
+        <div class="rgpd-item">
+          <div class="rgpd-key">a</div>
+          <div>
+            <h3>Opt-in clair</h3>
+            <p>Le public choisit de s'identifier pour accéder à un contenu, une expérience ou un privilège.</p>
+          </div>
+        </div>
+        <div class="rgpd-item">
+          <div class="rgpd-key">b</div>
+          <div>
+            <h3>Export libre</h3>
+            <p>Les données peuvent être exportées ou connectées à vos outils CRM selon vos besoins.</p>
+          </div>
+        </div>
+        <div class="rgpd-item">
+          <div class="rgpd-key">c</div>
+          <div>
+            <h3>Souveraineté marque</h3>
+            <p>La relation créée appartient à la marque, pas à une plateforme sociale.</p>
+          </div>
+        </div>
+        <div class="rgpd-item">
+          <div class="rgpd-key">d</div>
+          <div>
+            <h3>Traçabilité</h3>
+            <p>Chaque interaction peut être suivie, mesurée et analysée.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTEURS -->
+<section id="sectors" class="section-paper">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Cas d'usage</span>
+        <h2 class="display-md" style="margin-top: 24px;">
+          Une clé,<br>
+          <span class="serif">plusieurs terrains</span><br>
+          de jeu.
+        </h2>
+      </div>
+      <p>
+        De la scène au retail, des podiums aux stades : KEYZz s'adapte aux moments forts qui rythment votre marque, et prolonge le lien longtemps après.
+      </p>
+    </div>
+
+    <div class="sect-grid">
+      <div class="sect-card">
+        <span class="sect-tag">01 · Sports / Live</span>
+        <h3>Festivals &amp; stades</h3>
+        <p>Trophées de participation, contenus exclusifs, accès VIP, réactivation d'une édition à l'autre.</p>
+      </div>
+      <div class="sect-card">
+        <span class="sect-tag">02 · Musique</span>
+        <h3>Artistes &amp; labels</h3>
+        <p>Contenus inédits, early access, merch, rencontres, préventes, expériences exclusives pour les fans.</p>
+      </div>
+      <div class="sect-card">
+        <span class="sect-tag">03 · Luxe</span>
+        <h3>Marques &amp; maisons</h3>
+        <p>Cercles privilégiés, invitations, accès privés, collections limitées, avantages réservés.</p>
+      </div>
+      <div class="sect-card">
+        <span class="sect-tag">04 · Retail</span>
+        <h3>Boutiques &amp; malls</h3>
+        <p>Drive-to-store, offres ciblées, récompenses, parcours gamifiés, mesure de conversion.</p>
+      </div>
+      <div class="sect-card">
+        <span class="sect-tag">05 · Agences</span>
+        <h3>Activations clients</h3>
+        <p>Une couche mesurable et réactivable à vos activations : plus de valeur pour le public, plus de data utile.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="contact">
+  <div class="container">
+    <div class="final-cta">
+      <div>
+        <span class="eyebrow" style="color: var(--muted-soft);">Imaginer ma première KEYZz</span>
+        <h2 style="margin-top: 24px;">
+          Et si votre prochaine<br>
+          activation <span class="em">donnait</span><br>
+          vraiment envie de revenir ?
+        </h2>
+        <p>
+          Parlez-nous de votre événement, de votre public ou de votre campagne. Nous vous montrerons comment créer une première KEYZz simple, désirable et mesurable.
+        </p>
+        <div class="final-actions">
+          <a href="mailto:contact@keyzz.io" class="btn btn-accent">
+            Imaginer ma première KEYZz
+            <span style="font-size: 14px;">→</span>
+          </a>
+          <a href="mailto:contact@keyzz.io" class="btn btn-light">Réserver une démo</a>
+        </div>
+      </div>
+      <div class="final-side">
+        <div class="final-key">
+          <div class="final-key-top">
+            <span>KEYZz · 000</span>
+            <span>⌬</span>
+          </div>
+          <div>
+            <div class="final-key-name">Première<br>clé</div>
+          </div>
+          <div class="final-key-bottom">Access · More</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-display">
+      <span>KEYZz</span>
+      <span class="dot"></span>
+      <span class="em">Access more</span>
+    </div>
+
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <span class="logo-mark"></span>
+          <span>KEYZz</span>
+        </div>
+        <p>Transformez chaque activation en clé digitale désirable. Construisez une relation directe, mesurable et réactivable avec votre public.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Produit</h4>
+        <ul>
+          <li><a href="#promesse">Promesse</a></li>
+          <li><a href="#how">Comment ça marche</a></li>
+          <li><a href="#ecosystem">Écosystème</a></li>
+          <li><a href="#sectors">Secteurs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Légal</h4>
+        <ul>
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">Politique RGPD</a></li>
+          <li><a href="#">CGV</a></li>
+          <li><a href="#">Cookies</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:contact@keyzz.io">contact@keyzz.io</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#contact">Réserver une démo</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 KEYZz — Tous droits réservés.</div>
+      <div>Made with care, in France.</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

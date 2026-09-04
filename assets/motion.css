@@ -1,0 +1,459 @@
+/* ==========================================================================
+   KEYZz — motion layer
+   Button hover states, ambient animations, page-transition veil.
+   Scroll reveals, counters, tilt and parallax live in assets/motion.js and
+   write inline styles; everything here is declarative.
+
+   The export applies every design property inline, so the hover overrides
+   below use !important — a plain class can never outrank an inline style.
+   ========================================================================== */
+
+:root {
+  --kz-violet: #6e3bff;
+  --kz-violet-soft: #b4a2ff;
+  --kz-ease: cubic-bezier(0.22, 1, 0.36, 1); /* expo-out, the house curve */
+  --kz-ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+  --kz-ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --------------------------------------------------------------------------
+   First paint. The head script stamps .kz-js before anything renders; the
+   stage stays invisible under the veil until motion.js has staged the intro.
+   A zero-duration delayed animation is the failsafe: whatever happens, the
+   page is visible after 2.5 s.
+   -------------------------------------------------------------------------- */
+.kz-js #stage,
+.kz-js #kz-nav {
+  visibility: hidden;
+  animation: kz-failsafe 0s 2.5s forwards;
+}
+.kz-js.kz-ready #stage,
+.kz-js.kz-ready #kz-nav {
+  visibility: visible;
+  animation: none;
+}
+@keyframes kz-failsafe {
+  to {
+    visibility: visible;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Page veil — the curtain that closes on exit and lifts on arrival.
+   -------------------------------------------------------------------------- */
+.kz-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #0b0b0d;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+.kz-veil::after {
+  /* thin violet edge on the moving lip of the curtain */
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--kz-violet) 30%, #fff 50%, var(--kz-violet) 70%, transparent);
+  opacity: 0.9;
+  filter: blur(0.3px);
+}
+.kz-veil.is-open {
+  transition: transform 1.05s var(--kz-ease-io);
+  transform: translate3d(0, -101%, 0);
+}
+.kz-veil.is-closing {
+  transform: translate3d(0, 101%, 0);
+  transition: none;
+}
+.kz-veil.is-closing::after {
+  bottom: auto;
+  top: -1px;
+}
+.kz-veil.is-closing.is-closed {
+  transition: transform 0.62s var(--kz-ease-io);
+  transform: translate3d(0, 0, 0);
+}
+/* the page recedes as the curtain closes */
+.kz-js #stage,
+.kz-js #kz-nav {
+  transition: opacity 0.6s var(--kz-ease-io);
+}
+.kz-leaving #stage,
+.kz-leaving #kz-nav {
+  opacity: 0.3;
+}
+
+/* --------------------------------------------------------------------------
+   Scroll progress hairline
+   -------------------------------------------------------------------------- */
+.kz-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  z-index: 9998;
+  background: linear-gradient(90deg, var(--kz-violet), var(--kz-violet-soft));
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* --------------------------------------------------------------------------
+   Hero title — word masks (motion.js wraps each word)
+   -------------------------------------------------------------------------- */
+.kz-w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0.08em 0.02em 0.16em;
+  margin: -0.08em -0.02em -0.16em;
+}
+.kz-w > span {
+  display: inline-block;
+  transform: translate3d(0, 118%, 0) rotate(2deg);
+  transform-origin: 0 100%;
+  transition: transform 1.15s var(--kz-ease);
+  will-change: transform;
+}
+.kz-w.is-in > span {
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   Ambient: halos breathe, the Pro plan glows, chips shimmer
+   -------------------------------------------------------------------------- */
+[data-name="Halo violet"],
+[data-name="Halo"] {
+  animation: kz-breathe 9s var(--kz-ease-io) infinite;
+  will-change: transform, opacity;
+}
+[data-name="Section CTA démo"] [data-name="Halo violet"] {
+  animation-delay: -4s;
+}
+@keyframes kz-breathe {
+  0%,
+  100% {
+    transform: scale(1) translate3d(0, 0, 0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.09) translate3d(0, -12px, 0);
+    opacity: 1;
+  }
+}
+
+[data-name="Plan Pro"] {
+  box-shadow: 0 30px 80px -30px rgba(110, 59, 255, 0.55), 0 0 0 0 rgba(110, 59, 255, 0) !important;
+  animation: kz-pro-glow 5s ease-in-out infinite;
+}
+@keyframes kz-pro-glow {
+  0%,
+  100% {
+    box-shadow: 0 30px 80px -30px rgba(110, 59, 255, 0.45), 0 0 0 0 rgba(110, 59, 255, 0);
+  }
+  50% {
+    box-shadow: 0 34px 90px -26px rgba(110, 59, 255, 0.75), 0 0 0 6px rgba(110, 59, 255, 0.06);
+  }
+}
+
+/* the "Pro" badge next to the logo and the annual chip catch a light sweep */
+[data-name="Nav"] [data-name="Badge"],
+[data-name="Onglet annuel"] [data-name="Chip"] {
+  position: relative;
+  overflow: hidden;
+}
+[data-name="Nav"] [data-name="Badge"]::after,
+[data-name="Onglet annuel"] [data-name="Chip"]::after {
+  content: "";
+  position: absolute;
+  inset: -40% -60%;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.55) 50%, transparent 60%);
+  transform: translate3d(-120%, 0, 0);
+  animation: kz-shimmer 6s var(--kz-ease-io) 2s infinite;
+  pointer-events: none;
+}
+@keyframes kz-shimmer {
+  0% {
+    transform: translate3d(-120%, 0, 0);
+  }
+  18%,
+  100% {
+    transform: translate3d(120%, 0, 0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Buttons. motion.js classifies them: .kz-btn-primary (violet),
+   .kz-btn-light (white), .kz-btn-ghost (outlined). --mx/--my come from the
+   magnetic follower, --ms is the hover scale.
+   -------------------------------------------------------------------------- */
+.kz-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  cursor: pointer;
+  transform: translate3d(var(--mx, 0px), var(--my, 0px), 0) scale(var(--ms, 1));
+  transition: transform 0.5s var(--kz-ease), box-shadow 0.5s var(--kz-ease), background-color 0.35s ease, outline-color 0.35s ease, filter 0.35s ease;
+  will-change: transform;
+}
+.kz-btn > * {
+  position: relative;
+  z-index: 1;
+}
+.kz-btn::before {
+  /* light sweep */
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.28) 50%, transparent 65%);
+  transform: translate3d(-110%, 0, 0);
+  transition: transform 0s;
+  pointer-events: none;
+  z-index: 0;
+}
+.kz-btn:hover::before {
+  transform: translate3d(110%, 0, 0);
+  transition: transform 0.9s var(--kz-ease-io);
+}
+.kz-btn:hover {
+  --ms: 1.03;
+}
+.kz-btn:active {
+  --ms: 0.97;
+  transition-duration: 0.12s;
+}
+.kz-btn [data-name="Flèche"],
+.kz-btn [data-name="Icône"] {
+  transition: transform 0.5s var(--kz-ease);
+}
+.kz-btn:hover [data-name="Flèche"] {
+  transform: translate3d(4px, 0, 0);
+}
+.kz-btn-primary:hover {
+  background-color: #7b4dff !important;
+  box-shadow: 0 14px 34px -10px rgba(110, 59, 255, 0.75), 0 2px 0 0 rgba(255, 255, 255, 0.12) inset !important;
+}
+.kz-btn-light:hover {
+  box-shadow: 0 14px 34px -12px rgba(255, 255, 255, 0.45) !important;
+}
+.kz-btn-ghost:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  outline-color: rgba(180, 162, 255, 0.7) !important;
+  box-shadow: 0 12px 30px -14px rgba(0, 0, 0, 0.6) !important;
+}
+/* outlined plan buttons fill with violet */
+[data-name^="Plan "] .kz-btn-ghost:hover {
+  background-color: var(--kz-violet) !important;
+  outline-color: var(--kz-violet) !important;
+  box-shadow: 0 14px 34px -10px rgba(110, 59, 255, 0.7) !important;
+}
+[data-name^="Plan "] .kz-btn-ghost:hover [data-name="Libellé"] {
+  color: #fff !important;
+}
+.kz-btn [data-name="Libellé"] {
+  transition: color 0.3s ease;
+}
+
+/* --------------------------------------------------------------------------
+   Nav — la page courante est blanche, les autres liens blanchissent au survol.
+   -------------------------------------------------------------------------- */
+[data-name="Nav"] .kz-nav-link {
+  transition: color 0.3s ease;
+}
+[data-name="Nav"] .kz-nav-link:hover,
+[data-name="Nav"] .kz-link:hover .kz-nav-link,
+[data-name="Nav"] [data-name="Lien Produit"]:hover .kz-nav-link,
+[data-name="Nav"] .kz-nav-link.is-current {
+  color: #fff !important;
+}
+
+/* The bar carries the background colour of the section under it; over a light
+   one it flips its own contents. The violet CTA reads on both. */
+#kz-nav [data-name="Logo"] path,
+#kz-nav [data-name="Chevron bas"] path {
+  transition: fill 0.35s ease;
+}
+#kz-nav [data-name="Badge"] {
+  transition: background-color 0.35s ease;
+}
+#kz-nav [data-name="Badge"] [data-name="Libellé"] {
+  transition: color 0.35s ease;
+}
+#kz-nav.is-light [data-name="Logo"] path {
+  fill: #0b0b0d;
+}
+#kz-nav.is-light [data-name="Chevron bas"] path {
+  fill: #6b6b73;
+}
+#kz-nav.is-light .kz-nav-link {
+  color: #56565e !important;
+}
+#kz-nav.is-light .kz-nav-link:hover,
+#kz-nav.is-light .kz-link:hover .kz-nav-link,
+#kz-nav.is-light [data-name="Lien Produit"]:hover .kz-nav-link,
+#kz-nav.is-light .kz-nav-link.is-current {
+  color: #0b0b0d !important;
+}
+#kz-nav.is-light [data-name="Badge"] {
+  background-color: #0b0b0d !important;
+}
+#kz-nav.is-light [data-name="Badge"] [data-name="Libellé"] {
+  color: #fff !important;
+}
+
+/* --------------------------------------------------------------------------
+   Sélecteur d'audience — la bulle blanche glisse sous l'onglet survolé.
+   Les couleurs ne s'appliquent qu'une fois la bulle posée par motion.js
+   (.kz-seg) : sans JS, l'onglet actif garde le blanc inline de l'export.
+   -------------------------------------------------------------------------- */
+.kz-pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 999px;
+  background: #fff;
+  z-index: 0;
+  pointer-events: none;
+  transition: transform 0.45s var(--kz-ease), width 0.45s var(--kz-ease);
+  will-change: transform, width;
+}
+.kz-seg > [data-name^="Onglet"] {
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+}
+.kz-seg [data-name^="Libellé"] {
+  transition: color 0.3s ease;
+}
+.kz-seg svg path {
+  transition: fill 0.3s ease;
+}
+.kz-seg > [data-name^="Onglet"] [data-name^="Libellé"] {
+  color: #9a9aa1 !important;
+}
+.kz-seg > [data-name^="Onglet"] svg path {
+  fill: #9a9aa1;
+}
+.kz-seg > .is-on [data-name^="Libellé"] {
+  color: #0b0b0d !important;
+}
+.kz-seg > .is-on svg path {
+  fill: #0b0b0d;
+}
+/* the pill needs a positioned host; the pricing switch has none inline */
+.kz-seg {
+  position: relative;
+}
+
+/* prices fade in when the billing switch flips */
+@keyframes kz-price-swap {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+}
+[data-name="Prix"].is-swap {
+  animation: kz-price-swap 0.45s var(--kz-ease);
+}
+
+/* --------------------------------------------------------------------------
+   Bandeau logos — défilement horizontal continu. motion.js range les logos
+   dans une piste, la duplique, et cale la durée sur sa largeur (vitesse
+   constante). Les fondus latéraux (z-index 11/12) restent au-dessus.
+   -------------------------------------------------------------------------- */
+[data-name="Bandeau logos"].kz-marquee {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  justify-content: flex-start !important;
+}
+.kz-marquee-view {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.kz-marquee-track {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  height: 100%;
+  gap: 60px;
+  padding-right: 60px;
+}
+.kz-marquee-view.is-running > .kz-marquee-track {
+  animation: kz-marquee 40s linear infinite;
+  will-change: transform;
+}
+@keyframes kz-marquee {
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Curseurs. Les survols décoratifs (liens, onglets, cartes, gains, étapes,
+   logos, réseaux, champ e-mail) ont été retirés : seuls les boutons/CTA
+   réagissent encore au survol.
+   -------------------------------------------------------------------------- */
+.kz-nav-link,
+[data-name="Lien"],
+[data-name^="Onglet"],
+[data-name="Réseaux"] > svg {
+  cursor: pointer;
+}
+[data-name="Bandeau logos"] > [data-name]:not([data-name^="Fondu"]) {
+  cursor: default;
+}
+[data-name="Champ e-mail"] {
+  cursor: text;
+}
+
+/* --------------------------------------------------------------------------
+   Éventail KEYZz & exploded stack — 3D context for motion.js
+   -------------------------------------------------------------------------- */
+[data-name="Frame 2147223764"],
+[data-name="Pile éclatée"] {
+  perspective: 1400px;
+  transform-style: preserve-3d;
+}
+[data-name="Frame 2147223764"] > [data-name^="KEYZz"] {
+  will-change: transform;
+}
+[data-name="Pile éclatée"] > [data-name^="Couche"] {
+  will-change: transform;
+}
+[data-name="Section Pilotage"] {
+  perspective: 1600px;
+}
+[data-name="Mockup dashboard"] {
+  will-change: transform;
+}
+[data-name="Dashboard (copie)"] {
+  will-change: transform;
+}
+
+/* reduced motion: nothing moves on its own */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+  }
+  .kz-progress {
+    display: none;
+  }
+  .kz-marquee-view.is-running > .kz-marquee-track {
+    animation: none;
+  }
+}
