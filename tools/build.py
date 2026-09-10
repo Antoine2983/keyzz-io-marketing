@@ -1,13 +1,18 @@
-"""Rebuild index.html / pricing.html from the pen.dev "html-css" exports.
+"""Rebuild index.html / pricing.html / simulator.html from the pen.dev "html-css" exports.
 
 Usage:
     python3 tools/build.py [export-dir]
 
-Expects `css-home.html` and `css-tarifs.html` in the export directory
-(default: ./design-export). Produce them from KEYZZ TEST.pen with:
+Expects `css-home.html`, `css-tarifs.html` and `css-simulateur.html` in the
+export directory (default: ./design-export). Produce them from KEYZZ TEST.pen
+with:
 
-    Export(["AOXrP"], "html-css", "design-export/css-home.html")    # home
-    Export(["ASriL"], "html-css", "design-export/css-tarifs.html")  # pricing
+    Export(["AOXrP"], "html-css", "design-export/css-home.html")        # home
+    Export(["ASriL"], "html-css", "design-export/css-tarifs.html")      # pricing
+    Export([...],     "html-css", "design-export/css-simulateur.html")  # simulateur
+
+assets/site.css and assets/site.js are rewritten from the CSS and JS constants
+below on every run: edit them here, never only in assets/.
 """
 
 import re, os, sys, base64, shutil, hashlib
@@ -105,6 +110,20 @@ def linkify_block(html, pencil_name, href, limit=1):
     out.append(html[pos:])
     return "".join(out)
 
+def drop_block(html, pencil_name):
+    """Remove a whole <div data-pencil-name="NAME"> ... </div> block."""
+    k = html.find('data-pencil-name="%s"' % pencil_name)
+    if k < 0:
+        return html
+    start = html.rindex("<div", 0, k)
+    end = find_close(html, start)
+    if end is None:
+        return html
+    pre, post = html[:start].rstrip(" \t"), html[end:]
+    if pre.endswith("\n") and post.startswith("\n"):
+        post = post[1:]
+    return pre + post
+
 def swap_bandeau(body):
     """Replace the exported "Bandeau logos" block with design-export/bandeau-logos.html.
 
@@ -196,6 +215,27 @@ body {
   transform-origin: top left;
 }
 
+/* The nav, lifted out of #stage by site.js: a full-bleed opaque bar pinned to
+   the viewport, holding the canvas-scaled nav. motion.js paints it with the
+   background colour of the section running under it. */
+#kz-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5000;
+  background-color: #0b0b0d;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  transition: background-color 0.35s ease, border-color 0.35s ease;
+}
+#kz-nav.is-light {
+  border-bottom-color: rgba(11, 11, 13, 0.08);
+}
+#kz-nav-canvas {
+  width: 1440px;
+  transform-origin: top left;
+}
+
 .kz-link {
   color: inherit;
   text-decoration: none;
@@ -218,6 +258,27 @@ JS = """(function () {
   var BASE = 1440;
   var last = -1;
 
+  /* The nav is lifted out of the canvas so it can hang off the viewport:
+     `position: fixed` inside #stage would be trapped by its scale transform,
+     and `sticky` never fires either — every scroll container above the nav is
+     clipped. A spacer holds its place so the canvas layout is untouched. The
+     lifted bar is scaled by fit() exactly like the canvas it came from. */
+  var bar = null, canvas = null, spacer = null;
+  (function liftNav() {
+    var nav = stage.querySelector('[data-name="Nav"]');
+    if (!nav) return;
+    bar = document.createElement('div');
+    bar.id = 'kz-nav';
+    canvas = document.createElement('div');
+    canvas.id = 'kz-nav-canvas';
+    spacer = document.createElement('div');
+    spacer.id = 'kz-nav-space';
+    nav.parentNode.insertBefore(spacer, nav);
+    canvas.appendChild(nav);
+    bar.appendChild(canvas);
+    document.body.insertBefore(bar, stage);
+  })();
+
   function fit() {
     var w = document.documentElement.clientWidth;
     if (w === last) return;
@@ -225,10 +286,19 @@ JS = """(function () {
     var s = Math.min(1, w / BASE);
     stage.style.transform = s === 1 ? '' : 'scale(' + s + ')';
     stage.style.marginLeft = s === 1 ? Math.max(0, (w - BASE) / 2) + 'px' : '0px';
+    if (bar) {
+      canvas.style.transform = stage.style.transform;
+      canvas.style.marginLeft = stage.style.marginLeft;
+      var h = canvas.getBoundingClientRect().height;
+      /* the spacer lives in the canvas, so it takes the unscaled height */
+      spacer.style.height = h / s + 'px';
+      /* the bar does not: a transform never changes layout height */
+      bar.style.height = h + 'px';
+    }
     /* Only write the height when it actually moves: reassigning it on every
        measure can nudge the scroll position while fonts and images settle. */
-    var h = stage.getBoundingClientRect().height + 'px';
-    if (h !== document.body.style.height) document.body.style.height = h;
+    var page = stage.getBoundingClientRect().height + 'px';
+    if (page !== document.body.style.height) document.body.style.height = page;
   }
 
   function remeasure() {
@@ -252,6 +322,9 @@ PAGES = [
     ("css-tarifs.html", "pricing.html", "Tarifs — KEYZz Pro",
      "Des formules claires pour activer vos publics : découvrez les plans KEYZz Pro, "
      "le pack Lancement et les offres Enterprise.", "pricing"),
+    ("css-simulateur.html", "simulator.html", "Simulateur — KEYZz Pro",
+     "Estimez ce que vos événements vous laissent : contacts identifiés, coût par contact "
+     "et formule la plus avantageuse pour votre saison.", "simulateur"),
 ]
 
 for src, dst, title, desc, canonical in PAGES:
@@ -260,6 +333,10 @@ for src, dst, title, desc, canonical in PAGES:
     body = extract_images(body)
     body = copy_local_images(body)
     body = swap_bandeau(body)
+
+    # The Marque / Agence / Artiste switch in the hero led nowhere: dropped
+    # until the agency and artist pages exist.
+    body = drop_block(body, "Sélecteur audience")
 
     # Cross-page navigation: header logo, footer logo, and the nav items only.
     # The "Marque" blocks inside the card mockups must stay non-interactive.
@@ -270,6 +347,8 @@ for src, dst, title, desc, canonical in PAGES:
         body = head_part + linkify_block(foot_part, "Marque", "index.html", limit=1)
     body = linkify(body, "Tarifs", "pricing.html")
     body = linkify(body, "Plateforme", "index.html")
+    if dst != "simulator.html":
+        body = linkify_block(body, "Bouton estimation", "simulator.html", limit=1)
 
     # The exporter emits `content-box` on the sections that carry a partial
     # border, which stacks their padding on top of the authored size and blows
