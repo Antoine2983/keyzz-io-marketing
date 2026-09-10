@@ -310,7 +310,8 @@
 }
 
 /* --------------------------------------------------------------------------
-   Sélecteur d'audience — la bulle blanche glisse sous l'onglet survolé.
+   Sélecteurs segmentés (bascule mensuel / annuel) — la bulle blanche glisse
+   sous l'onglet survolé.
    Les couleurs ne s'appliquent qu'une fois la bulle posée par motion.js
    (.kz-seg) : sans JS, l'onglet actif garde le blanc inline de l'export.
    -------------------------------------------------------------------------- */

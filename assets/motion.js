@@ -836,12 +836,10 @@
     var pricing = doc.querySelector(N('En-tête tarifs'));
     var t = 420;
 
-    if (hero && hero.querySelector(N('Sélecteur audience'))) {
-      var sel = hero.querySelector(N('Sélecteur audience'));
+    if (hero) {
       var title = hero.querySelector(N('Titre'));
       var sub = hero.querySelector(N('Sous-titre'));
       var micro = hero.querySelector(N('Micro-preuve'));
-      seq.push({ el: sel, at: t, o: { y: 20, s: 0.96 }, dur: 1000 });
       if (title) seq.push({ el: title, words: true, at: t + 80 });
       if (sub) seq.push({ el: sub, at: t + 520, o: { y: 26 }, dur: 1100 });
       $(N('Boutons') + ' > *', hero).forEach(function (b, i) {
@@ -999,7 +997,6 @@
     try {
       marqueeInit();
       play = intro();
-      segmented(doc.querySelector(N('Sélecteur audience')));
       billing();
       fan();
       pile();
