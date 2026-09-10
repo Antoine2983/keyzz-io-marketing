@@ -176,7 +176,7 @@ TAIL = """    </div>
     <script src="assets/site.js"></script>
     <script src="assets/glass.js"></script>
     <script src="assets/motion.js"></script>
-  </body>
+{extra}  </body>
 </html>
 """
 
@@ -318,16 +318,19 @@ JS = """(function () {
 PAGES = [
     ("css-home.html", "index.html", "KEYZz Pro — Vos événements méritent mieux qu'un billet",
      "KEYZz transforme chaque billet en carte de collection numérique : activez vos publics, "
-     "prolongez l'expérience et pilotez vos événements depuis une plateforme unique.", ""),
+     "prolongez l'expérience et pilotez vos événements depuis une plateforme unique.", "", ""),
     ("css-tarifs.html", "pricing.html", "Tarifs — KEYZz Pro",
      "Des formules claires pour activer vos publics : découvrez les plans KEYZz Pro, "
-     "le pack Lancement et les offres Enterprise.", "pricing"),
+     "le pack Lancement et les offres Enterprise.", "pricing", ""),
     ("css-simulateur.html", "simulator.html", "Simulateur — KEYZz Pro",
      "Estimez ce que vos événements vous laissent : contacts identifiés, coût par contact "
-     "et formule la plus avantageuse pour votre saison.", "simulateur"),
+     "et formule la plus avantageuse pour votre saison.", "simulateur",
+     '    <script src="assets/simulator.js"></script>\n'),
 ]
 
-for src, dst, title, desc, canonical in PAGES:
+for page in PAGES:
+    src, dst, title, desc, canonical = page[:5]
+    extra = page[5] if len(page) > 5 else ""
     html = open(os.path.join(SRC, src), encoding="utf-8").read()
     body = extract_body(html)
     body = extract_images(body)
@@ -363,9 +366,9 @@ for src, dst, title, desc, canonical in PAGES:
     body = body.replace('data-name="Film de verre"', 'data-name="Film de verre" ' + GLASS_ATTRS)
     body = re.sub(r'\s*data-icon-(?:name|set)="[^"]*"', "", body)
 
-    page = HEAD.format(title=title, desc=desc, canonical=canonical) + body + TAIL
-    open(os.path.join(OUT, dst), "w", encoding="utf-8").write(page)
-    print(dst, len(page) // 1024, "KB")
+    out = HEAD.format(title=title, desc=desc, canonical=canonical) + body + TAIL.format(extra=extra)
+    open(os.path.join(OUT, dst), "w", encoding="utf-8").write(out)
+    print(dst, len(out) // 1024, "KB")
 
 open(os.path.join(ASSETS, "site.css"), "w", encoding="utf-8").write(CSS)
 open(os.path.join(ASSETS, "site.js"), "w", encoding="utf-8").write(JS)
