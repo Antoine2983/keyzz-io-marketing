@@ -113,6 +113,7 @@
     scan: 33,
     landing: 95,
     claim: 80,
+    payante: true,
     prixKeyzz: 15
   };
 
@@ -137,7 +138,7 @@
       return a.cost - b.cost;
     });
 
-    var revenu = (contacts * state.prixKeyzz * REVERSEMENT) / TVA;
+    var revenu = state.payante ? (contacts * state.prixKeyzz * REVERSEMENT) / TVA : 0;
 
     return {
       participants: participants,
@@ -407,17 +408,47 @@
     taux[k] = valeur;
   });
 
-  /* le prix de la KEYZz vit dans la phrase de l'indicateur : on isole le
-     nombre dans son propre nœud pour le rendre modifiable sans rien déplacer */
-  var libRevenu = q('Libellé', indicRevenu);
-  var prixSpan = document.createElement('span');
-  prixSpan.textContent = String(state.prixKeyzz);
-  libRevenu.textContent = '';
-  libRevenu.appendChild(document.createTextNode('de revenu net, KEYZz à '));
-  libRevenu.appendChild(prixSpan);
-  libRevenu.appendChild(document.createTextNode(' €'));
-  editable(prixSpan, {
-    label: 'Prix de la KEYZz payante',
+  /* Gratuite ou payante, et à quel prix. La rangée n'existe pas dans l'export :
+     elle est bâtie en clonant le sélecteur « Votre public » et le champ
+     « Vous accueillez », pour hériter de leurs styles au lieu de les recopier. */
+  var profils = q('Profils', entrees);
+  var blocPublic = q('Public', profils);
+
+  var rangeeKeyzz = profils.cloneNode(false);
+  rangeeKeyzz.setAttribute('data-name', 'Options KEYZz');
+
+  var blocFormule = blocPublic.cloneNode(true);
+  blocFormule.setAttribute('data-name', 'Formule KEYZz');
+  setText(q('Libellé', blocFormule), 'Vos KEYZz');
+  var selFormule = q('Sélecteur', blocFormule);
+  var optGratuites = selFormule.children[0];
+  var optPayantes = selFormule.children[1];
+  optGratuites.setAttribute('data-name', 'Option Gratuites');
+  setText(q('Texte', optGratuites), 'Gratuites');
+  optPayantes.setAttribute('data-name', 'Option Payantes');
+  setText(q('Texte', optPayantes), 'Payantes');
+  rangeeKeyzz.appendChild(blocFormule);
+
+  var blocPrix = blocPublic.cloneNode(false);
+  blocPrix.setAttribute('data-name', 'Prix KEYZz');
+  var libPrix = q('Libellé', blocPublic).cloneNode(true);
+  setText(libPrix, 'Prix moyen d’une KEYZz');
+  blocPrix.appendChild(libPrix);
+  var champPrix = q('Champ', q('Jauge', entrees)).cloneNode(true);
+  var unitePrix = q('Unité', champPrix);
+  [q('Icône', unitePrix), q('Chevron', unitePrix)].forEach(function (n) {
+    if (n && n.parentNode) n.parentNode.removeChild(n);
+  });
+  setText(q('Texte', unitePrix), '€ TTC');
+  var prixValeur = kids(champPrix, 'Valeur')[0];
+  setText(prixValeur, String(state.prixKeyzz));
+  blocPrix.appendChild(champPrix);
+  rangeeKeyzz.appendChild(blocPrix);
+
+  entrees.insertBefore(rangeeKeyzz, profils.nextSibling);
+
+  editable(prixValeur, {
+    label: 'Prix moyen d’une KEYZz',
     min: 0,
     max: 100000,
     fallback: 15,
@@ -425,6 +456,10 @@
       state.prixKeyzz = v;
     }
   });
+
+  /* l'indicateur de revenu et son filet ne servent à rien en KEYZz gratuite */
+  var filetRevenu = indicRevenu.previousElementSibling;
+  var libRevenu = q('Libellé', indicRevenu);
 
   var paintPublic = wireSelector(
     q('Sélecteur', q('Public', q('Profils', entrees))),
@@ -447,6 +482,17 @@
     function (v) {
       state.engagement = v;
       applyTaux();
+    }
+  );
+
+  var paintFormule = wireSelector(
+    selFormule,
+    { 'Option Gratuites': false, 'Option Payantes': true },
+    function () {
+      return state.payante;
+    },
+    function (v) {
+      state.payante = v;
     }
   );
 
@@ -500,9 +546,13 @@
     ['scan', 'landing', 'claim'].forEach(function (k) {
       if (taux[k] !== skip) setText(taux[k], pct(state[k]));
     });
-    if (prixSpan !== skip) setText(prixSpan, num(state.prixKeyzz));
+    if (prixValeur !== skip) setText(prixValeur, num(state.prixKeyzz));
     paintPublic();
     paintEngagement();
+    paintFormule();
+    blocPrix.style.display = state.payante ? '' : 'none';
+    indicRevenu.style.display = state.payante ? '' : 'none';
+    if (filetRevenu) filetRevenu.style.display = state.payante ? '' : 'none';
 
     /* — reçu — */
     setText(q('Détail', q('Libellé', lignes.participants)), num(state.audience) + ' × ' + num(state.events));
@@ -543,6 +593,7 @@
     );
 
     setText(q('Valeur', indicRevenu), eur(r.revenu));
+    setText(libRevenu, 'de revenu net, KEYZz à ' + num(state.prixKeyzz) + ' €');
 
     /* — classement — */
     setText(titreReco, 'Nous vous recommandons la formule ' + best.plan.key);
