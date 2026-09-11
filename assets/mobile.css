@@ -276,7 +276,11 @@
   /* ------------------------------------------------------------------
      Bandeau logos : fondus resserrés
      ------------------------------------------------------------------ */
-  [data-name="Bandeau logos"] {
+  /* sur la home le bandeau est un enfant direct du canevas : il faut battre
+     la règle générique des sections (#stage > div > [data-name]) qui remet
+     hauteur auto et gouttières — d'où le sélecteur de même poids, plus bas
+     dans la feuille */
+  #stage > div [data-name="Bandeau logos"] {
     width: 100% !important;
     padding: 0 !important;
     height: 84px !important;
