@@ -618,7 +618,11 @@
       plans.forEach(function (plan) {
         var p = PRICES[plan.getAttribute('data-name')];
         write(plan.querySelector(N('Montant')), year ? p.year : p.month);
-        write(plan.querySelector(N('Cale')), year ? 'HT / an' : 'HT / mois');
+        /* le libellé stylé est l'enfant « Unité » : écrire sur « Cale » le
+           remplacerait par un nœud de texte nu, qui hériterait de la police
+           par défaut du navigateur */
+        var cale = plan.querySelector(N('Cale'));
+        write((cale && cale.querySelector(N('Unité'))) || cale, year ? 'HT / an' : 'HT / mois');
         write(
           plan.querySelector(N('Annuel')),
           year ? 'soit ' + p.perMonth + ' HT/mois — 2 mois offerts' : p.year + ' HT/an — 2 mois offerts'

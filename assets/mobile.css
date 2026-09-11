@@ -27,8 +27,34 @@
   #stage > div > [data-name] {
     width: 100% !important;
     height: auto !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+    padding: 64px 20px !important;
+  }
+  /* rythme vertical par section : les 90 à 140 px du canevas 1440 laissent
+     des vides énormes sur 390 px */
+  #stage > div > [data-name="Hero"] {
+    padding: 44px 20px 56px !important;
+  }
+  #stage > div > [data-name="Section Pilotage"] {
+    padding: 72px 20px 0 !important;
+  }
+  #stage > div > [data-name="Section CTA démo"] {
+    padding: 72px 20px 80px !important;
+  }
+  #stage > div > [data-name="Bande chiffres"] {
+    padding: 44px 20px !important;
+  }
+  #stage > div > [data-name="Pied de page"] {
+    padding: 48px 20px 32px !important;
+  }
+  #stage > div > [data-name="En-tête tarifs"],
+  #stage > div > [data-name="En-tête simulateur"] {
+    padding: 40px 20px 48px !important;
+  }
+  #stage > div > [data-name="Rangée bascule"] {
+    padding: 0 20px 28px !important;
+  }
+  #stage > div > [data-name="Section calculateur"] {
+    padding: 0 20px 56px !important;
   }
   /* rien ne dépasse : tout bloc nommé est plafonné à son conteneur, sauf
      l'intérieur des compositions kz-fit, qui sont déjà mises à l'échelle */
@@ -134,6 +160,13 @@
   }
   #kz-ctabar > * {
     pointer-events: auto;
+  }
+  /* de quoi dégager le dernier contenu de sous la barre basse */
+  #stage > div > [data-name]:last-child {
+    padding-bottom: 108px !important;
+  }
+  html {
+    scroll-padding-bottom: 96px;
   }
   #kz-ctabar.is-on {
     transform: translate3d(0, 0, 0);
@@ -303,7 +336,7 @@
     flex-wrap: wrap !important;
     height: auto !important;
     gap: 28px 0 !important;
-    justify-content: flex-start !important;
+    justify-content: center !important;
   }
   [data-name="Chiffres"] > [data-name] {
     flex: 0 0 50% !important;
@@ -506,13 +539,16 @@
   [data-name="Capture démo"] [data-name="Bouton"] {
     justify-content: center !important;
   }
+  /* la pilule devient une carte : un rayon de 999 px sur un bloc de 140 px
+     de haut dévore ses propres coins */
   [data-name="Interlocuteur démo"] {
     flex-direction: column !important;
     align-items: center !important;
     text-align: center;
     gap: 12px !important;
-    padding: 20px !important;
+    padding: 22px 20px !important;
     height: auto !important;
+    border-radius: 24px !important;
   }
   [data-name="Interlocuteur démo"] [data-name="Identité"] {
     align-items: center !important;
@@ -527,6 +563,15 @@
   [data-name="Capture démo"] {
     height: auto !important;
     padding: 10px !important;
+    border-radius: 24px !important;
+    gap: 8px !important;
+  }
+  [data-name="Capture démo"] [data-name="Champ e-mail"] {
+    border-radius: 999px;
+  }
+  /* sous 16 px, iOS zoome sur le champ au focus et casse la mise en page */
+  .kz-input {
+    font-size: 16px !important;
   }
   [data-name="Capture démo"] [data-name="Bouton"] {
     position: static !important;

@@ -205,6 +205,7 @@ TAIL = """    </div>
     <script src="assets/site.js"></script>
     <script src="assets/glass.js"></script>
     <script src="assets/motion.js"></script>
+    <script src="assets/forms.js"></script>
 {extra}  </body>
 </html>
 """
@@ -231,6 +232,9 @@ body {
   margin: 0;
   background-color: #0b0b0d;
   color: #ffffff;
+  /* l'export pose une police sur chaque texte, mais un conteneur réécrit par
+     script hériterait sinon du Times par défaut du navigateur */
+  font-family: Urbanist, system-ui, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -278,6 +282,44 @@ body {
 [data-name="Bouton primaire"],
 [data-name="Bouton secondaire"] {
   cursor: pointer;
+}
+
+/* Champs e-mail rendus fonctionnels par assets/forms.js : l'input remplace le
+   texte dessiné et doit s'y fondre exactement. */
+.kz-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: #ffffff;
+  line-height: normal;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+}
+.kz-input::placeholder {
+  color: #6b6b73;
+  opacity: 1;
+}
+.kz-form-error {
+  outline-color: #ff8f6b !important;
+}
+.kz-form-msg {
+  margin: 10px 0 0;
+  font-family: Urbanist, system-ui, sans-serif;
+  font-size: 13.5px;
+  line-height: 20px;
+  max-width: 360px;
+}
+.kz-form-msg.is-error {
+  color: #ff8f6b;
+}
+.kz-form-msg.is-ok,
+.kz-form-msg.is-pending {
+  color: #b4a2ff;
 }
 """
 

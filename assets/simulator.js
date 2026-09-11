@@ -583,7 +583,11 @@
     paintPublic();
     paintEngagement();
     paintFormule();
-    /* en gratuit, le prix s'éteint sans bouger : la rangée garde sa forme */
+    /* Sur desktop les deux moitiés de la rangée sont côte à côte : le prix
+       s'éteint sur place pour que la carte garde sa forme. Empilé sur mobile,
+       un bloc éteint n'est qu'une ligne morte : il disparaît. */
+    var etroit = document.documentElement.classList.contains('kz-mobile');
+    blocPrix.style.display = !state.payante && etroit ? 'none' : '';
     blocPrix.style.opacity = state.payante ? '' : '0.32';
     blocPrix.style.pointerEvents = state.payante ? '' : 'none';
     prixValeur.setAttribute('tabindex', state.payante ? '0' : '-1');
@@ -691,4 +695,8 @@
   }
 
   render();
+  /* franchir le point de rupture change la façon d'éteindre le prix */
+  window.addEventListener('resize', function () {
+    render();
+  });
 })();
