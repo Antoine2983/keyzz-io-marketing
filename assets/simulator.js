@@ -429,23 +429,50 @@
   setText(q('Texte', optPayantes), 'Payantes');
   rangeeKeyzz.appendChild(blocFormule);
 
-  /* le prix reprend la charpente des deux grands champs : une pastille qui
-     nomme la chose, la valeur à droite. Ici la pastille dit « Prix moyen »
-     et la valeur porte l'unité, comme 2 000 porte « Participants ». */
+  /* Le prix vit dans la même pilule que les sélecteurs de la rangée : une
+     étiquette à gauche dans le style d'une option non choisie, la valeur à
+     droite, et le crayon du reçu — le signe « modifiable » de la maquette. */
   var blocPrix = blocPublic.cloneNode(false);
   blocPrix.setAttribute('data-name', 'Prix KEYZz');
   var libPrix = q('Libellé', blocPublic).cloneNode(true);
-  setText(libPrix, 'Par KEYZz payante, TTC');
+  setText(libPrix, 'Prix moyen d’une KEYZz, TTC');
   blocPrix.appendChild(libPrix);
-  var champPrix = q('Champ', q('Jauge', entrees)).cloneNode(true);
-  var unitePrix = q('Unité', champPrix);
-  [q('Icône', unitePrix), q('Chevron', unitePrix)].forEach(function (n) {
-    if (n && n.parentNode) n.parentNode.removeChild(n);
+
+  var pilulePrix = q('Sélecteur', blocPublic).cloneNode(true);
+  pilulePrix.setAttribute('data-name', 'Champ prix');
+  pilulePrix.removeAttribute('role');
+  pilulePrix.style.alignItems = 'center';
+  var etiquette = pilulePrix.children[0];
+  var prixOption = pilulePrix.children[1];
+  [etiquette, prixOption].forEach(function (o) {
+    o.removeAttribute('role');
+    o.removeAttribute('tabindex');
+    o.removeAttribute('aria-checked');
+    o.style.backgroundColor = 'transparent';
+    o.style.cursor = '';
   });
-  setText(q('Texte', unitePrix), 'Prix moyen');
-  var prixValeur = kids(champPrix, 'Valeur')[0];
+  etiquette.setAttribute('data-name', 'Montant');
+  etiquette.style.justifyContent = 'flex-start';
+  var etiquetteTexte = q('Texte', etiquette);
+  setText(etiquetteTexte, 'Montant');
+  etiquetteTexte.style.color = q('Texte', q('Option Ouvert', blocPublic)).style.color;
+
+  prixOption.setAttribute('data-name', 'Prix');
+  prixOption.style.flex = '0 0 auto';
+  prixOption.style.gap = '6px';
+  prixOption.style.cursor = 'text';
+  var prixValeur = q('Texte', prixOption);
+  prixValeur.setAttribute('data-name', 'Valeur');
+  prixValeur.style.color = '#FFFFFF';
+  prixValeur.style.fontWeight = '700';
   setText(prixValeur, num(state.prixKeyzz) + ' €');
-  blocPrix.appendChild(champPrix);
+  var crayon = q('Éditer', q('Taux', q('Libellé', lignes.scan)));
+  if (crayon) prixOption.appendChild(crayon.cloneNode(true));
+  prixOption.addEventListener('click', function () {
+    prixValeur.focus();
+  });
+
+  blocPrix.appendChild(pilulePrix);
   rangeeKeyzz.appendChild(blocPrix);
   blocPrix.style.transition = 'opacity 0.3s ease';
 
