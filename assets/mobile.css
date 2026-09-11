@@ -7,8 +7,9 @@
    Les compositions figées (éventail, pile, mockup) ne se replient pas : elles
    sont rétrécies par le moteur kz-fit de site.js.
    ========================================================================== */
-/* le burger n'existe que sous le point de rupture */
-#kz-burger {
+/* le burger et la barre basse n'existent que sous le point de rupture */
+#kz-burger,
+#kz-ctabar {
   display: none;
 }
 
@@ -104,15 +105,38 @@
   #kz-nav [data-name="Connexion"] {
     display: none !important;
   }
+  /* le CTA vit dans la barre basse : la nav garde logo + burger */
   #kz-nav [data-name="Actions"] {
+    display: none !important;
+  }
+  #kz-burger {
     margin-left: auto;
-    gap: 0 !important;
   }
-  #kz-nav [data-name="Bouton démo"] {
-    padding: 9px 14px !important;
+  #kz-ctabar {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 4990;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+    background-color: rgba(11, 11, 13, 0.94);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    transform: translate3d(0, 110%, 0);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  #kz-nav [data-name="Bouton démo"] [data-name="Libellé"] {
-    font-size: 12.5px !important;
+  #kz-ctabar.is-on {
+    transform: translate3d(0, 0, 0);
+  }
+  .kz-ctabar-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box;
+    padding: 15px 24px !important;
+    cursor: pointer;
   }
   #kz-burger {
     display: flex;
@@ -194,6 +218,9 @@
   [data-name="Hero"] {
     align-items: center !important;
     gap: 36px !important;
+  }
+  [data-name="Hero"] [data-name="Boutons"] {
+    justify-content: center !important;
   }
   [data-name="Entête + stat"] {
     gap: 24px !important;

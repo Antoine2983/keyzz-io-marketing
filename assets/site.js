@@ -10,7 +10,7 @@
      and `sticky` never fires either — every scroll container above the nav is
      clipped. A spacer holds its place so the canvas layout is untouched. The
      lifted bar is scaled by fit() exactly like the canvas it came from. */
-  var bar = null, canvas = null, spacer = null;
+  var bar = null, canvas = null, spacer = null, ctabar = null;
   (function liftNav() {
     var nav = stage.querySelector('[data-name="Nav"]');
     if (!nav) return;
@@ -41,7 +41,46 @@
     bar.addEventListener('click', function (e) {
       if (e.target.closest && e.target.closest('a.kz-link')) bar.classList.remove('is-open');
     });
+
+    /* Mobile : le CTA démo quitte la barre du haut pour une barre basse
+       collée à l'écran, qui se montre dès que l'on remonte et s'efface dès
+       que l'on redescend. Elle mène à la section démo de la page. */
+    var demoBtn = nav.querySelector('[data-name="Bouton démo"]');
+    if (demoBtn) {
+      ctabar = document.createElement('div');
+      ctabar.id = 'kz-ctabar';
+      var clone = demoBtn.cloneNode(true);
+      clone.removeAttribute('data-name'); /* motion.js n'y touche pas */
+      clone.className = 'kz-ctabar-btn';
+      ctabar.appendChild(clone);
+      document.body.appendChild(ctabar);
+      clone.addEventListener('click', function () {
+        var target = stage.querySelector('[data-name="Section CTA démo"]');
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
   })();
+
+  /* la barre basse suit le sens du défilement */
+  var lastY = 0;
+  var scrollQueued = false;
+  window.addEventListener(
+    'scroll',
+    function () {
+      if (!ctabar || scrollQueued) return;
+      scrollQueued = true;
+      requestAnimationFrame(function () {
+        scrollQueued = false;
+        var y = window.scrollY;
+        var mobile = document.documentElement.classList.contains('kz-mobile');
+        if (!mobile || y < 160) ctabar.classList.remove('is-on');
+        else if (y < lastY - 4) ctabar.classList.add('is-on');
+        else if (y > lastY + 4) ctabar.classList.remove('is-on');
+        lastY = y;
+      });
+    },
+    { passive: true }
+  );
 
   /* --------------------------------------------------------------------
      Fixed compositions (the card fan, the exploded stack, the dashboard
