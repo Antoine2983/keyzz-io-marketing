@@ -429,21 +429,25 @@
   setText(q('Texte', optPayantes), 'Payantes');
   rangeeKeyzz.appendChild(blocFormule);
 
+  /* le prix reprend la charpente des deux grands champs : une pastille qui
+     nomme la chose, la valeur à droite. Ici la pastille dit « Prix moyen »
+     et la valeur porte l'unité, comme 2 000 porte « Participants ». */
   var blocPrix = blocPublic.cloneNode(false);
   blocPrix.setAttribute('data-name', 'Prix KEYZz');
   var libPrix = q('Libellé', blocPublic).cloneNode(true);
-  setText(libPrix, 'Prix moyen d’une KEYZz');
+  setText(libPrix, 'Par KEYZz payante, TTC');
   blocPrix.appendChild(libPrix);
   var champPrix = q('Champ', q('Jauge', entrees)).cloneNode(true);
   var unitePrix = q('Unité', champPrix);
   [q('Icône', unitePrix), q('Chevron', unitePrix)].forEach(function (n) {
     if (n && n.parentNode) n.parentNode.removeChild(n);
   });
-  setText(q('Texte', unitePrix), '€ TTC');
+  setText(q('Texte', unitePrix), 'Prix moyen');
   var prixValeur = kids(champPrix, 'Valeur')[0];
-  setText(prixValeur, String(state.prixKeyzz));
+  setText(prixValeur, num(state.prixKeyzz) + ' €');
   blocPrix.appendChild(champPrix);
   rangeeKeyzz.appendChild(blocPrix);
+  blocPrix.style.transition = 'opacity 0.3s ease';
 
   entrees.insertBefore(rangeeKeyzz, profils.nextSibling);
 
@@ -457,9 +461,11 @@
     }
   });
 
-  /* l'indicateur de revenu et son filet ne servent à rien en KEYZz gratuite */
-  var filetRevenu = indicRevenu.previousElementSibling;
+  /* En KEYZz gratuite, le troisième indicateur ne dit plus le revenu mais ce
+     que vaut la base constituée, au prix du média payant : le gain change de
+     nature, pas de place. */
   var libRevenu = q('Libellé', indicRevenu);
+  var detailRevenu = q('Détail', indicRevenu);
 
   var paintPublic = wireSelector(
     q('Sélecteur', q('Public', q('Profils', entrees))),
@@ -546,13 +552,15 @@
     ['scan', 'landing', 'claim'].forEach(function (k) {
       if (taux[k] !== skip) setText(taux[k], pct(state[k]));
     });
-    if (prixValeur !== skip) setText(prixValeur, num(state.prixKeyzz));
+    if (prixValeur !== skip) setText(prixValeur, num(state.prixKeyzz) + ' €');
     paintPublic();
     paintEngagement();
     paintFormule();
-    blocPrix.style.display = state.payante ? '' : 'none';
-    indicRevenu.style.display = state.payante ? '' : 'none';
-    if (filetRevenu) filetRevenu.style.display = state.payante ? '' : 'none';
+    /* en gratuit, le prix s'éteint sans bouger : la rangée garde sa forme */
+    blocPrix.style.opacity = state.payante ? '' : '0.32';
+    blocPrix.style.pointerEvents = state.payante ? '' : 'none';
+    prixValeur.setAttribute('tabindex', state.payante ? '0' : '-1');
+    blocPrix.setAttribute('aria-hidden', state.payante ? 'false' : 'true');
 
     /* — reçu — */
     setText(q('Détail', q('Libellé', lignes.participants)), num(state.audience) + ' × ' + num(state.events));
@@ -592,8 +600,15 @@
           : num(best.plan.included) + ' KEYZz incluses, ' + num(-reste) + ' non utilisées'
     );
 
-    setText(q('Valeur', indicRevenu), eur(r.revenu));
-    setText(libRevenu, 'de revenu net, KEYZz à ' + num(state.prixKeyzz) + ' €');
+    if (state.payante) {
+      setText(q('Valeur', indicRevenu), eur(r.revenu));
+      setText(libRevenu, 'de revenu net, KEYZz à ' + num(state.prixKeyzz) + ' €');
+      setText(detailRevenu, num(REVERSEMENT * 100) + ' % reversés, hors TVA');
+    } else {
+      setText(q('Valeur', indicRevenu), eur(r.contacts * MEDIA_PAYANT));
+      setText(libRevenu, 'de base, au prix du média payant');
+      setText(detailRevenu, num(r.contacts) + ' contacts × ' + eurFin(MEDIA_PAYANT));
+    }
 
     /* — classement — */
     setText(titreReco, 'Nous vous recommandons la formule ' + best.plan.key);
