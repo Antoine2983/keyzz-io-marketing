@@ -49,10 +49,17 @@
      On mobile each one is wrapped in a plain div — invisible to motion.js,
      which selects by data-name — and scaled to the width it is given.
      -------------------------------------------------------------------- */
-  var FIT = ['Frame 2147223764', 'Pile éclatée', 'Mockup dashboard'];
+  /* focus : sur mobile, plutôt que de rétrécir tout le bloc jusqu'à
+     l'illisible, on cadre une tranche (w naturels à partir de x) et on coupe
+     la hauteur — le mockup du dashboard montre sa colonne principale. */
+  var FIT = [
+    { name: 'Frame 2147223764' },
+    { name: 'Pile éclatée' },
+    { name: 'Mockup dashboard', focus: { w: 684, x: 212, maxH: 380 } }
+  ];
   var fitted = [];
-  FIT.forEach(function (name) {
-    var el = stage.querySelector('[data-name="' + name + '"]');
+  FIT.forEach(function (spec) {
+    var el = stage.querySelector('[data-name="' + spec.name + '"]');
     if (!el) return;
     var wrap = document.createElement('div');
     wrap.className = 'kz-fit';
@@ -80,6 +87,7 @@
     fitted.push({
       wrap: wrap,
       el: el,
+      focus: spec.focus || null,
       bx: b.x0,
       by: b.y0,
       w: b.x1 - b.x0,
@@ -98,13 +106,19 @@
       var cs = getComputedStyle(section);
       var avail = section.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
       if (!(avail > 100)) avail = document.documentElement.clientWidth - 40;
-      var s = Math.min(1, avail / f.w);
+      var w = f.focus ? f.focus.w : f.w;
+      var x = f.bx + (f.focus ? f.focus.x : 0);
+      var s = Math.min(1, avail / w);
+      var h = f.h * s;
+      if (f.focus && f.focus.maxH) h = Math.min(h, f.focus.maxH);
       f.wrap.style.display = 'block';
-      f.wrap.style.width = f.w * s + 'px';
-      f.wrap.style.height = f.h * s + 'px';
+      f.wrap.style.width = w * s + 'px';
+      f.wrap.style.height = h + 'px';
       f.wrap.style.margin = '0 auto';
       f.wrap.style.flexShrink = '0';
-      f.el.style.transform = 'scale(' + s + ') translate(' + -f.bx + 'px, ' + -f.by + 'px)';
+      f.wrap.style.overflow = f.focus ? 'hidden' : '';
+      f.wrap.style.borderRadius = f.focus ? '16px' : '';
+      f.el.style.transform = 'scale(' + s + ') translate(' + -x + 'px, ' + -f.by + 'px)';
       f.el.style.transformOrigin = 'top left';
     });
   }
@@ -112,6 +126,7 @@
   function resetBlocks() {
     fitted.forEach(function (f) {
       f.wrap.style.cssText = 'display: contents';
+      f.wrap.style.overflow = '';
       f.el.style.transform = '';
       f.el.style.transformOrigin = '';
     });

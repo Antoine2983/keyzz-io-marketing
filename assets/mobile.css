@@ -236,6 +236,14 @@
   [data-name="Colonne explication"] {
     width: 100% !important;
   }
+  [data-name="Privilèges"] {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  [data-name="Privilèges"] > [data-name] {
+    width: 100% !important;
+    flex: none !important;
+  }
   [data-name="Mosaïque"],
   [data-name="Mosaïque"] [data-name="Colonne"] {
     gap: 16px !important;
@@ -271,6 +279,15 @@
   [data-name="Bandeau logos"] {
     width: 100% !important;
     padding: 0 !important;
+    height: 84px !important;
+  }
+  [data-name="Bandeau logos"] .kz-marquee-view,
+  [data-name="Bandeau logos"] .kz-marquee-track {
+    height: 100% !important;
+  }
+  [data-name="Bandeau logos"] .kz-marquee-track {
+    gap: 36px !important;
+    padding-right: 36px !important;
   }
   [data-name="Fondu gauche"] {
     width: 90px !important;
@@ -424,6 +441,13 @@
   [data-name="Classement formules"] [data-name="En-têtes"] > [data-name="Colonne"]:last-child {
     display: none !important;
   }
+  [data-name="Chip économie"] {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  [data-name="Chip économie"] [data-name="Texte"] {
+    white-space: normal !important;
+  }
 
   /* ------------------------------------------------------------------
      CTA démo & pied de page
@@ -442,8 +466,35 @@
     justify-content: center !important;
   }
   [data-name="Interlocuteur démo"] {
-    flex-wrap: wrap !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center;
+    gap: 12px !important;
+    padding: 20px !important;
+    height: auto !important;
+  }
+  [data-name="Interlocuteur démo"] [data-name="Identité"] {
+    align-items: center !important;
+    width: 100% !important;
+  }
+  [data-name="Interlocuteur démo"] [data-name="Nom"],
+  [data-name="Interlocuteur démo"] [data-name="Rôle"] {
+    white-space: normal !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+  [data-name="Capture démo"] {
+    height: auto !important;
+    padding: 10px !important;
+  }
+  [data-name="Capture démo"] [data-name="Bouton"] {
+    position: static !important;
+    width: 100% !important;
     justify-content: center !important;
+  }
+  [data-name="Capture démo"] [data-name="Champ e-mail"] {
+    position: static !important;
+    height: 54px !important;
   }
   [data-name="Pied de page"] [data-name="Haut"] {
     gap: 32px !important;
