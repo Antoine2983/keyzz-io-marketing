@@ -119,11 +119,21 @@
     right: 0;
     bottom: 0;
     z-index: 4990;
-    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
-    background-color: rgba(11, 11, 13, 0.94);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 34px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+    /* fondu vers le haut dans la couleur de la section au bas de l'écran,
+       posée par motion.js dans --kz-bg */
+    background: linear-gradient(
+      to top,
+      var(--kz-bg, #0b0b0d) 0%,
+      var(--kz-bg, #0b0b0d) 46%,
+      transparent 100%
+    );
+    pointer-events: none;
     transform: translate3d(0, 110%, 0);
     transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  #kz-ctabar > * {
+    pointer-events: auto;
   }
   #kz-ctabar.is-on {
     transform: translate3d(0, 0, 0);

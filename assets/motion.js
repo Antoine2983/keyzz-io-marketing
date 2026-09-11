@@ -130,25 +130,39 @@
       return { el: el, color: rgb(getComputedStyle(el).backgroundColor) || page };
     });
 
-    var painted = '';
-    function paint() {
-      var edge = bar.getBoundingClientRect().height + 1;
-      var c = page;
+    function zoneAt(edge) {
       for (var i = 0; i < zones.length; i++) {
         var r = zones[i].el.getBoundingClientRect();
-        if (r.top <= edge && r.bottom > edge) {
-          c = zones[i].color;
-          break;
+        if (r.top <= edge && r.bottom > edge) return zones[i].color;
+      }
+      return page;
+    }
+
+    var painted = '';
+    var paintedBottom = '';
+    function paint() {
+      var c = zoneAt(bar.getBoundingClientRect().height + 1);
+      var css = 'rgb(' + c[0] + ', ' + c[1] + ', ' + c[2] + ')';
+      if (css !== painted) {
+        painted = css;
+        bar.style.backgroundColor = css;
+        /* le panneau du burger mobile reprend exactement la couleur de la barre */
+        bar.style.setProperty('--kz-nav-bg', css);
+        /* relative luminance decides which way the contents flip */
+        bar.classList.toggle('is-light', (0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]) / 255 > 0.55);
+      }
+
+      /* la barre basse mobile fond dans la couleur de la section qui passe
+         au bas de l'écran, pas dans celle du haut */
+      var ctabar = doc.getElementById('kz-ctabar');
+      if (ctabar) {
+        var b = zoneAt(window.innerHeight - 2);
+        var cssB = 'rgb(' + b[0] + ', ' + b[1] + ', ' + b[2] + ')';
+        if (cssB !== paintedBottom) {
+          paintedBottom = cssB;
+          ctabar.style.setProperty('--kz-bg', cssB);
         }
       }
-      var css = 'rgb(' + c[0] + ', ' + c[1] + ', ' + c[2] + ')';
-      if (css === painted) return;
-      painted = css;
-      bar.style.backgroundColor = css;
-      /* le panneau du burger mobile reprend exactement la couleur de la barre */
-      bar.style.setProperty('--kz-nav-bg', css);
-      /* relative luminance decides which way the contents flip */
-      bar.classList.toggle('is-light', (0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]) / 255 > 0.55);
     }
 
     var queued = false;
