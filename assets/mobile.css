@@ -1,0 +1,467 @@
+/* ==========================================================================
+   KEYZz — mobile (< 768px).
+   Au-dessus du point de rupture, le canevas 1440 est mis à l'échelle par
+   site.js et cette feuille est inerte. En dessous, site.js coupe la mise à
+   l'échelle et tout se replie ici. L'export pose chaque propriété en ligne :
+   les surcharges passent par !important, ciblées par data-name.
+   Les compositions figées (éventail, pile, mockup) ne se replient pas : elles
+   sont rétrécies par le moteur kz-fit de site.js.
+   ========================================================================== */
+/* le burger n'existe que sous le point de rupture */
+#kz-burger {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  /* ------------------------------------------------------------------
+     Canevas
+     ------------------------------------------------------------------ */
+  #stage {
+    width: 100% !important;
+  }
+  #stage > div {
+    width: 100% !important;
+  }
+  /* toutes les sections : pleine largeur, gouttières de 20px */
+  #stage > div > [data-name] {
+    width: 100% !important;
+    height: auto !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  /* rien ne dépasse : tout bloc nommé est plafonné à son conteneur, sauf
+     l'intérieur des compositions kz-fit, qui sont déjà mises à l'échelle */
+  #stage [data-name] {
+    max-width: 100% !important;
+  }
+  #stage .kz-fit [data-name] {
+    max-width: none !important;
+  }
+  [data-name="Hero"] > [data-name^="Frame"],
+  [data-name="Hero"] [data-name="Boutons"] {
+    width: 100% !important;
+  }
+  /* le support de l'éventail perd son décalage de composition desktop */
+  [data-name="Éventail KEYZZ"] {
+    width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    height: auto !important;
+  }
+  /* les largeurs de colonne dessinées pour 1440 s'effacent */
+  [data-name="En-tête section"],
+  [data-name="En-tête section"] > [data-name],
+  [data-name="Titre"],
+  [data-name="Sous-titre"],
+  [data-name="Description"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    white-space: normal !important;
+  }
+
+  /* ------------------------------------------------------------------
+     Typographie
+     ------------------------------------------------------------------ */
+  [data-name="Hero"] [data-name="Titre"],
+  [data-name="En-tête tarifs"] [data-name="Titre"],
+  [data-name="En-tête simulateur"] [data-name="Titre"] {
+    font-size: 34px !important;
+    line-height: 39px !important;
+    letter-spacing: -1.2px !important;
+  }
+  [data-name="En-tête section"] [data-name="Titre"],
+  [data-name="Section CTA démo"] > [data-name="Titre"],
+  [data-name="FAQ tarifs"] > [data-name="Titre"],
+  [data-name="En-tête"] [data-name="Titre"] {
+    font-size: 27px !important;
+    line-height: 33px !important;
+    letter-spacing: -0.6px !important;
+  }
+  [data-name="Sous-titre"] {
+    font-size: 15px !important;
+    line-height: 23px !important;
+  }
+  [data-name="Eyebrow"] {
+    white-space: normal !important;
+    text-align: center;
+  }
+
+  /* ------------------------------------------------------------------
+     Nav : barre compacte + burger
+     ------------------------------------------------------------------ */
+  #kz-nav-canvas {
+    width: 100% !important;
+  }
+  #kz-nav [data-name="Nav"] {
+    padding: 14px 20px !important;
+    gap: 12px !important;
+    position: relative;
+  }
+  #kz-nav [data-name="Connexion"] {
+    display: none !important;
+  }
+  #kz-nav [data-name="Actions"] {
+    margin-left: auto;
+    gap: 0 !important;
+  }
+  #kz-nav [data-name="Bouton démo"] {
+    padding: 9px 14px !important;
+  }
+  #kz-nav [data-name="Bouton démo"] [data-name="Libellé"] {
+    font-size: 12.5px !important;
+  }
+  #kz-burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4.5px;
+    width: 38px;
+    height: 34px;
+    padding: 8px 9px;
+    background: none;
+    border: 1px solid rgba(154, 154, 161, 0.35);
+    border-radius: 10px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  #kz-burger span {
+    display: block;
+    height: 1.6px;
+    border-radius: 2px;
+    background-color: #fff;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  #kz-nav.is-light #kz-burger span {
+    background-color: #0b0b0d;
+  }
+  #kz-nav.is-open #kz-burger span:nth-child(1) {
+    transform: translateY(6.1px) rotate(45deg);
+  }
+  #kz-nav.is-open #kz-burger span:nth-child(2) {
+    opacity: 0;
+  }
+  #kz-nav.is-open #kz-burger span:nth-child(3) {
+    transform: translateY(-6.1px) rotate(-45deg);
+  }
+  /* le rang de liens devient le panneau du burger */
+  #kz-nav [data-name="Liens"] {
+    display: none !important;
+  }
+  #kz-nav.is-open [data-name="Liens"] {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 18px !important;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--kz-nav-bg, #0b0b0d);
+    padding: 6px 20px 22px;
+    border-bottom: 1px solid rgba(154, 154, 161, 0.25);
+  }
+  #kz-nav.is-open [data-name="Liens"] .kz-nav-link {
+    font-size: 16px !important;
+  }
+
+  /* ------------------------------------------------------------------
+     Rangées → colonnes
+     ------------------------------------------------------------------ */
+  [data-name="Hero"],
+  [data-name="Entête + stat"],
+  [data-name="Gains"],
+  [data-name="Corps éclaté"],
+  [data-name="Étapes"],
+  [data-name="Mosaïque"],
+  [data-name="Mosaïque"] [data-name="Colonne"],
+  [data-name="Témoignages"],
+  [data-name="Encart estimation"],
+  [data-name="Grille plans"],
+  [data-name="Carte pack"],
+  [data-name="Bandeau Enterprise"],
+  [data-name="FAQ tarifs"] [data-name="Rangée"],
+  [data-name="Capture démo"],
+  [data-name="Pied de page"] [data-name="Haut"],
+  [data-name="Pied de page"] [data-name="Bas"] {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    height: auto !important;
+  }
+  [data-name="Hero"] {
+    align-items: center !important;
+    gap: 36px !important;
+  }
+  [data-name="Entête + stat"] {
+    gap: 24px !important;
+    align-items: flex-start !important;
+  }
+  [data-name="Entête + stat"] [data-name="Stat latérale"] {
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+  [data-name="Gains"] {
+    gap: 26px !important;
+  }
+  [data-name="Gains"] > [data-name^="Gain"] {
+    padding: 0 !important;
+    flex: none !important;
+  }
+  [data-name="Gains"] > [data-name="Filet"],
+  [data-name="Étapes"] [data-name="Filet"] {
+    width: 100% !important;
+    height: 1px !important;
+  }
+  [data-name="Étapes"] {
+    gap: 26px !important;
+  }
+  [data-name="Étapes"] > [data-name^="Étape"] {
+    flex: none !important;
+    width: 100% !important;
+  }
+  [data-name="Encart estimation"] {
+    gap: 20px !important;
+    padding: 26px 22px !important;
+  }
+  [data-name="Encart estimation"] [data-name="Titre"] {
+    font-size: 20px !important;
+    white-space: normal !important;
+  }
+  [data-name="Corps éclaté"] {
+    gap: 40px !important;
+  }
+  [data-name="Colonne explication"] {
+    width: 100% !important;
+  }
+  [data-name="Mosaïque"],
+  [data-name="Mosaïque"] [data-name="Colonne"] {
+    gap: 16px !important;
+  }
+  [data-name="Mosaïque"] > [data-name],
+  [data-name="Mosaïque"] [data-name="Colonne"] > [data-name] {
+    width: 100% !important;
+    flex: none !important;
+  }
+  [data-name="Témoignages"] {
+    gap: 16px !important;
+  }
+  [data-name="Témoignages"] > [data-name] {
+    width: 100% !important;
+    flex: none !important;
+    height: auto !important;
+  }
+  /* bande de chiffres violette : deux par rangée */
+  [data-name="Chiffres"] {
+    flex-wrap: wrap !important;
+    height: auto !important;
+    gap: 28px 0 !important;
+    justify-content: flex-start !important;
+  }
+  [data-name="Chiffres"] > [data-name] {
+    flex: 0 0 50% !important;
+    align-items: center !important;
+  }
+
+  /* ------------------------------------------------------------------
+     Bandeau logos : fondus resserrés
+     ------------------------------------------------------------------ */
+  [data-name="Bandeau logos"] {
+    width: 100% !important;
+    padding: 0 !important;
+  }
+  [data-name="Fondu gauche"] {
+    width: 90px !important;
+  }
+  [data-name="Fondu droit"] {
+    left: auto !important;
+    right: 0 !important;
+    width: 90px !important;
+  }
+
+  /* ------------------------------------------------------------------
+     Tarifs
+     ------------------------------------------------------------------ */
+  [data-name="Grille plans"] {
+    gap: 18px !important;
+  }
+  [data-name^="Plan "] {
+    width: 100% !important;
+    flex: none !important;
+  }
+  [data-name="Rangée bascule"] {
+    height: auto !important;
+  }
+  [data-name="Carte pack"],
+  [data-name="Bandeau Enterprise"] {
+    gap: 20px !important;
+    padding: 24px 20px !important;
+  }
+  [data-name="Carte pack"] [data-name="Titre"],
+  [data-name="Bandeau Enterprise"] [data-name="Nom"] {
+    white-space: normal !important;
+  }
+  [data-name="Carte pack"] [data-name="Ligne titre"] {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  [data-name="Carte pack"] [data-name="Titre"] {
+    font-size: 22px !important;
+    line-height: 28px !important;
+  }
+  [data-name="Ligne Partner"] {
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+    row-gap: 4px !important;
+    padding: 0 20px !important;
+    height: auto !important;
+  }
+  [data-name="Ligne Partner"] [data-name] {
+    white-space: normal !important;
+  }
+  [data-name="FAQ tarifs"] [data-name="Rangée"] {
+    gap: 16px !important;
+  }
+  [data-name="FAQ tarifs"] [data-name="Rangée"] > [data-name] {
+    width: 100% !important;
+    flex: none !important;
+  }
+  [data-name^="Plan "] [data-name="Montant"] {
+    font-size: 36px !important;
+  }
+
+  /* ------------------------------------------------------------------
+     Simulateur
+     ------------------------------------------------------------------ */
+  [data-name="Carte calculateur"] {
+    width: 100% !important;
+  }
+  /* les hauteurs figées du desktop s'effacent : le contenu replié est plus haut */
+  [data-name="Carte calculateur"],
+  [data-name="Carte calculateur"] [data-name="Entrées"],
+  [data-name="Carte calculateur"] [data-name="Reçu du calcul"],
+  [data-name="Carte calculateur"] [data-name="Résultat"],
+  [data-name="Carte calculateur"] [data-name="Pied de carte"],
+  [data-name="Section calculateur"] {
+    height: auto !important;
+  }
+  [data-name="Entrées"],
+  [data-name="Reçu du calcul"],
+  [data-name="Résultat"],
+  [data-name="Pied de carte"] {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    width: 100% !important;
+  }
+  [data-name="Profils"],
+  [data-name="Options KEYZz"] {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+  }
+  [data-name="Reçu du calcul"] [data-name^="Ligne "] {
+    flex-wrap: wrap !important;
+    row-gap: 4px !important;
+  }
+  [data-name="Reçu du calcul"] [data-name="Libellé"] {
+    flex: 1 1 auto !important;
+    min-width: 0;
+  }
+  [data-name="Résultat"] [data-name="Ligne chiffre"] [data-name="Valeur"] {
+    font-size: 40px !important;
+  }
+  [data-name="Résultat"] [data-name="Haut"] {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  [data-name="Indicateurs"] {
+    flex-direction: column !important;
+    height: auto !important;
+    padding: 24px 20px !important;
+    gap: 18px !important;
+    align-items: stretch !important;
+  }
+  [data-name="Indicateurs"] > [data-name="Filet"] {
+    width: 100% !important;
+    height: 1px !important;
+  }
+  [data-name="Pied de carte"] [data-name="CTA démo"] [data-name="Libellé"] {
+    white-space: normal !important;
+    text-align: center;
+  }
+  [data-name="Classement formules"] {
+    padding: 16px 14px !important;
+    height: auto !important;
+  }
+  [data-name^="Formule "],
+  [data-name="Section comparaison"] [data-name="En-tête"] {
+    height: auto !important;
+  }
+  [data-name^="Formule "] {
+    flex-wrap: wrap !important;
+    row-gap: 12px !important;
+  }
+  [data-name^="Formule "] > [data-name="Identité"] {
+    flex: 1 1 60% !important;
+    min-width: 0;
+  }
+  [data-name^="Formule "] > [data-name="Valeur"] {
+    width: 100% !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+  [data-name^="Formule "] [data-name="Composition"] {
+    flex-wrap: wrap !important;
+    row-gap: 4px !important;
+  }
+  [data-name^="Formule "] [data-name="Nom"] {
+    flex-wrap: wrap !important;
+    row-gap: 6px !important;
+  }
+  [data-name="Classement formules"] [data-name="En-têtes"] > [data-name="Colonne"]:last-child {
+    display: none !important;
+  }
+
+  /* ------------------------------------------------------------------
+     CTA démo & pied de page
+     ------------------------------------------------------------------ */
+  [data-name="Section CTA démo"] > [data-name="Sous-titre"] {
+    width: 100% !important;
+  }
+  [data-name="Capture démo"] {
+    width: 100% !important;
+    gap: 12px !important;
+  }
+  [data-name="Capture démo"] [data-name="Champ e-mail"] {
+    width: 100% !important;
+  }
+  [data-name="Capture démo"] [data-name="Bouton"] {
+    justify-content: center !important;
+  }
+  [data-name="Interlocuteur démo"] {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+  [data-name="Pied de page"] [data-name="Haut"] {
+    gap: 32px !important;
+  }
+  [data-name="Pied de page"] [data-name="Colonnes"] {
+    width: 100% !important;
+    flex-wrap: wrap !important;
+    gap: 28px 40px !important;
+  }
+  [data-name="Pied de page"] [data-name="Bas"] {
+    gap: 14px !important;
+    align-items: flex-start !important;
+  }
+  [data-name="Pied de page"] [data-name="Copyright"] {
+    white-space: normal !important;
+  }
+  [data-name="Pied de page"] [data-name="Baseline"] {
+    width: 100% !important;
+    white-space: normal !important;
+  }
+}

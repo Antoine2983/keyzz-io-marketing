@@ -145,6 +145,8 @@
       if (css === painted) return;
       painted = css;
       bar.style.backgroundColor = css;
+      /* le panneau du burger mobile reprend exactement la couleur de la barre */
+      bar.style.setProperty('--kz-nav-bg', css);
       /* relative luminance decides which way the contents flip */
       bar.classList.toggle('is-light', (0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]) / 255 > 0.55);
     }
