@@ -375,6 +375,10 @@ for page in PAGES:
     # The Marque / Agence / Artiste switch in the hero led nowhere: dropped
     # until the agency and artist pages exist.
     body = drop_block(body, "Sélecteur audience")
+    # Hero: no secondary "Voir la plateforme" button, and the micro-proof
+    # keeps only the set-up time (asked on 11/09/2026).
+    body = drop_block(body, "CTA secondaire")
+    body = body.replace("Mise en place en 48 h · Aucune app à installer", "Mise en place en 48 h", 1)
 
     # Cross-page navigation: header logo, footer logo, and the nav items only.
     # The "Marque" blocks inside the card mockups must stay non-interactive.
