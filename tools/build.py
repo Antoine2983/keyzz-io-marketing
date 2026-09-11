@@ -145,6 +145,34 @@ def swap_bandeau(body):
     end = find_close(body, start)
     return body[:start] + new + body[end:]
 
+def swap_dashboard(body):
+    """Replace the "Dashboard (copie)" inside the home mockup with
+    design-export/mockup-pilotage.html (the dashboard, exported on its own,
+    now in light mode). The 1440px frame is scaled down into the 1120px window
+    of the mockup: its content has fixed widths, so it cannot reflow."""
+    path = os.path.join(SRC, "mockup-pilotage.html")
+    if not os.path.exists(path):
+        return body
+    new = extract_body(open(path, encoding="utf-8").read())
+    k = new.find('data-pencil-name="B2B')
+    start = new.rindex("<div", 0, k)
+    new = new[start:find_close(new, start)]
+    new = extract_images(new)
+    k = body.find('data-pencil-name="Dashboard (copie)"')
+    if k < 0:
+        return body
+    old_start = body.rindex("<div", 0, k)
+    old_end = find_close(body, old_start)
+    frame = body[old_start:body.index(">", old_start) + 1]
+    # keep the exported window placement, swap the name and width onto the new root
+    new = re.sub(r'data-pencil-name="[^"]*"', 'data-pencil-name="Dashboard (copie)"', new, count=1)
+    new = re.sub(r'style="[^"]*"',
+                 'style="align-items: flex-start; background-color: #0B0B0D; box-sizing: border-box; display: flex; '
+                 'flex-direction: row; gap: 0px; height: fit-content; justify-content: flex-start; left: 0px; '
+                 'overflow: hidden; position: absolute; top: 0px; width: 1440px; z-index: 0; '
+                 'transform: scale(0.77778); transform-origin: top left"', new, count=1)
+    return body[:old_start] + new + body[old_end:]
+
 HEAD = """<!doctype html>
 <html lang="fr">
   <head>
@@ -336,6 +364,13 @@ for page in PAGES:
     body = extract_images(body)
     body = copy_local_images(body)
     body = swap_bandeau(body)
+    body = swap_dashboard(body)
+
+    # 20px more air above the "Vous voyez tout" title (asked on 11/09/2026).
+    body = body.replace(
+        'data-pencil-name="Section Pilotage"\n        style="align-items: center; background-color: #141417; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 82px; height: fit-content; justify-content: flex-start; overflow: hidden; padding: 110px 60px 0px 60px;',
+        'data-pencil-name="Section Pilotage"\n        style="align-items: center; background-color: #141417; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 82px; height: fit-content; justify-content: flex-start; overflow: hidden; padding: 130px 60px 0px 60px;',
+        1)
 
     # The Marque / Agence / Artiste switch in the hero led nowhere: dropped
     # until the agency and artist pages exist.
