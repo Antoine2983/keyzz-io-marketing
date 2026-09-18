@@ -124,6 +124,29 @@ def drop_block(html, pencil_name):
         post = post[1:]
     return pre + post
 
+def nav_simulateur(body):
+    """In the nav only, the FAQ entry becomes a link to the simulator.
+
+    "FAQ" also labels a footer link and appears in section copy, so the swap is
+    scoped to the Nav block. The designer reused data-pencil-name="FAQ" for two
+    nav items (the one reading "Tarifs" and the one reading "FAQ"): matching on
+    the text picks the right one.
+    """
+    k = body.find('data-pencil-name="Nav"')
+    if k < 0:
+        return body
+    start = body.rindex("<div", 0, k)
+    end = find_close(body, start)
+    if end is None:
+        return body
+    nav = body[start:end]
+    nav, n = re.subn(r'(<div\b[^>]*data-pencil-name="FAQ"[^>]*>)(\s*)FAQ(\s*)(</div>)',
+                     r'\1\2Simulateur\3\4', nav, count=1)
+    if not n:
+        return body
+    nav = linkify(nav, "Simulateur", "simulator.html", limit=1)
+    return body[:start] + nav + body[end:]
+
 def swap_bandeau(body):
     """Replace the exported "Bandeau logos" block with design-export/bandeau-logos.html.
 
@@ -598,6 +621,7 @@ for page in PAGES:
         body = head_part + linkify_block(foot_part, "Marque", "index.html", limit=1)
     body = linkify(body, "Tarifs", "pricing.html")
     body = linkify(body, "Plateforme", "index.html")
+    body = nav_simulateur(body)
     if dst != "simulator.html":
         body = linkify_block(body, "Bouton estimation", "simulator.html", limit=1)
 
