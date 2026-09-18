@@ -124,6 +124,31 @@ def drop_block(html, pencil_name):
         post = post[1:]
     return pre + post
 
+def swap_nav(body):
+    """Graft the home export's nav onto every page, so the header is strictly
+    identical everywhere.
+
+    The three exports had drifted: the pricing one hard-codes white on its
+    "Tarifs" entry, the simulator one tints the PRO badge differently. The
+    active entry is decided at runtime by markCurrent() in motion.js, so one
+    nav for all pages is the single source of truth.
+    """
+    path = os.path.join(SRC, "css-home.html")
+    if not os.path.exists(path):
+        return body
+    src = extract_body(open(path, encoding="utf-8").read())
+    k = src.find('data-pencil-name="Nav"')
+    if k < 0:
+        return body
+    start = src.rindex("<div", 0, k)
+    nav = extract_images(src[start:find_close(src, start)])
+    k = body.find('data-pencil-name="Nav"')
+    if k < 0:
+        return body
+    start = body.rindex("<div", 0, k)
+    end = find_close(body, start)
+    return body[:start] + nav + body[end:]
+
 def nav_simulateur(body):
     """In the nav only, the FAQ entry becomes a link to the simulator.
 
@@ -597,6 +622,7 @@ for page in PAGES:
     body = copy_local_images(body)
     body = swap_bandeau(body)
     body = swap_dashboard(body)
+    body = swap_nav(body)
 
     # 20px more air above the "Vous voyez tout" title (asked on 11/09/2026).
     body = body.replace(
